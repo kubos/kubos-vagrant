@@ -24,8 +24,6 @@ kubos update
 mv ~/.kubos /home/vagrant/
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-wget -P /usr/lib https://github.com/kubostech/kubos/raw/master/vm/lib/libmsp430.so
-
 #libjim0.76
 wget http://launchpadlibrarian.net/207671794/libjim0.76_0.76-1_i386.deb
 dpkg -i libjim0.76_0.76-1_i386.deb
@@ -54,5 +52,5 @@ $TI_MSPGCC_DIR/install_scripts/msp430uif_install.sh
 
 apt-get -y dist-upgrade
 apt-get install -y mspdebug linux-image-extra-virtual
-ln -s $TI_MSPGCC_DIR/bin/libmsp430.so /usr/lib/
+mv /home/vagrant/libmsp430.so /usr/lib/
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
