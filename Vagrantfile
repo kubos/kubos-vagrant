@@ -1,13 +1,12 @@
 # -*- mode: ruby -*-
-# vim: set ft=ruby :
+# vi: set ft=ruby :
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
-Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/xenial64"
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
 
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu/trusty32"
+  config.vm.provision "file", source: "./bin/libmsp430.so", destination: "~/libmsp430.so"
   config.vm.provision "shell", path: "./script/provision.sh"
 
   # Enable USB access
@@ -23,17 +22,16 @@ Vagrant.configure("2") do |config|
     ['0x0451', '0xf432', 'eZ430'],
     # Misc devices
     ['0x15ba', '0x0031', 'Olimex JTAG tiny'],
-
+    #STM Devices
+    ['0x0483', '0x3748', 'STM32 STLink'],
+    ['0x0483', '0x374b', 'STM32 STLink'],
+    ['0x0483', '0xdf11', 'STM32 BOOTLOADER']
   ]
-
   config.vm.provider "virtualbox" do |vb|
     vb.customize ['modifyvm', :id, '--usb', 'on']
+    vb.customize ["modifyvm", :id, "--usbehci", "on"]
     usb_devs.each do |dev|
       vb.customize ['usbfilter', 'add', '0', '--target', :id, '--vendorid', dev[0], '--productid', dev[1], '--name', dev[2]]
     end
-    # Don't boot with headless mode
-    # vb.gui = true
-    vb.customize ['modifyvm', :id, '--usbehci', 'on']
-    vb.customize ['modifyvm', :id, '--usb', 'on']
   end
 end
