@@ -28,6 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ['0x0483', '0xdf11', 'STM32 BOOTLOADER']
   ]
   config.vm.provider "virtualbox" do |vb|
+    vb.memory = 1024
     vb.customize ['modifyvm', :id, '--usb', 'on']
     vb.customize ["modifyvm", :id, "--usbehci", "on"]
     usb_devs.each do |dev|
