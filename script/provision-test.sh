@@ -1,7 +1,7 @@
 #!/bin/bash
 #README: This script only checks for programs to be installaed and accessible in the default PATH.
 #to add more programs to check for add them to the programs.txt file in the same directory.
-
+result=0
 red='\E[31m'
 green='\E[32m'
 
@@ -9,7 +9,12 @@ green='\E[32m'
 readarray programs < programs.txt
 
 test_installed () {
-    command -v $1 > /dev/null &&  printf "$green$1 => found\n" ||  printf "$red$1 => not found\n"
+    if command -v $1 > /dev/null
+    then
+        printf "$green$1 => found\n"
+    else
+        printf "$red$1 => not found\n" >&2
+    fi
     tput sgr0 #reset to normal text output
 }
 

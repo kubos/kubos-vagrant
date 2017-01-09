@@ -1,4 +1,6 @@
 apt-get update
+apt-get -y dist-upgrade
+apt-get update
 add-apt-repository -y ppa:team-gcc-arm-embedded/ppa
 add-apt-repository -y ppa:george-edison55/cmake-3.x
 add-apt-repository -y ppa:git-core/ppa
@@ -15,12 +17,20 @@ apt-get install -y cmake
 apt-get install -y gcc-msp430 gdb-msp430 msp430-libc
 
 # flash tools
-apt-get install mspdebug
-apt-get install dfu-util
-apt-get install openocd
+#apt-get udpate
+apt-get install -y mspdebug
+apt-get install -y dfu-util
+apt-get install -y openocd
 
+#since this is a private repo the url is unavaialble without authentication. An alternate temporary solution is on lines #29-32
 # download libmsp430.so
-wget -P /usr/lib https://github.com/kubostech/kubos/raw/vagrant-provision/vm/lib/libmsp430.so
+#wget -P /usr/lib https://github.com/kubostech/kubos/raw/vagrant-provision/vm/lib/libmsp430.so
+
+#Temporary fix for private repo hosting the libmsp430.so binary
+apt-get install unzip
+wget -P ./libmsp430.so.zip https://github.com/kyleparrott/libmsp430/blob/master/libmsp430.so.zip?raw=true
+unzip libmsp430.so.zip
+mv libmsp430.so /usr/lib
 
 #do the pip setup and installation things
 pip install --upgrade pip
@@ -28,23 +38,8 @@ pip install kubos-cli
 
 kubos update
 mv ~/.kubos /home/vagrant/
+
+apt-get install -y linux-image-extra-virtual
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-TI_MSPGCC_URL=http://software-dl.ti.com/msp430/msp430_public_sw/mcu/msp430/MSPGCC/3_02_02_00/exports/msp430-gcc-full-linux-installer-3.2.2.0.run
-TI_MSPGCC_DIR=/opt/ti-mspgcc
-
-wget -qO installer $TI_MSPGCC_URL
-echo "Installing TI MSPGCC"
-chmod +x installer
-./installer --mode unattended --prefix $TI_MSPGCC_DIR
-# Copy headers and ldscripts to the correct location to prevent the need to explicitly include them
-#cp $TI_MSPGCC_DIR/{include/*.h,msp430-elf/include}
-#cp $TI_MSPGCC_DIR/{include/*.ld,msp430-elf/lib}
-
-echo "export PATH=$TI_MSPGCC_DIR/bin:$PATH" >> /etc/profile
-$TI_MSPGCC_DIR/install_scripts/msp430uif_install.sh
-
-#apt-get -y dist-upgrade
-#apt-get install -y mspdebug linux-image-extra-virtual
-#mv /home/vagrant/libmsp430.so /usr/lib/
-#apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+echo "Finishing provisioning..."
