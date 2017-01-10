@@ -1,0 +1,2 @@
+#!/bin/sh
+PKG_CONFIG_LIBDIR=${PKG_CONFIG_LIBDIR:-/usr/bin/iobc_toolchain/usr/arm-buildroot-linux-uclibcgnueabi/sysroot/usr/lib/pkgconfig:/usr/bin/iobc_toolchain/usr/arm-buildroot-linux-uclibcgnueabi/sysroot/usr/share/pkgconfig} PKG_CONFIG_SYSROOT_DIR=${PKG_CONFIG_SYSROOT_DIR:-/usr/bin/iobc_toolchain/usr/arm-buildroot-linux-uclibcgnueabi/sysroot} $(dirname $0)/pkgconf  $@
