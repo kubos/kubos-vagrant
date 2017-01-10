@@ -53,4 +53,11 @@ $TI_MSPGCC_DIR/install_scripts/msp430uif_install.sh
 apt-get -y dist-upgrade
 apt-get install -y mspdebug linux-image-extra-virtual
 mv /home/vagrant/libmsp430.so /usr/lib/
+
+#KubOS Linux setup
+echo "Installing KubOS Linux Toolchain"
+sudo mv ~/iobc_toolchain /usr/bin
+echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
+
+
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
