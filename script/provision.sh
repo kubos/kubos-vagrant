@@ -56,7 +56,7 @@ mv /home/vagrant/libmsp430.so /usr/lib/
 
 #KubOS Linux setup
 echo "Installing KubOS Linux Toolchain"
-tar -xtvf /home/vagrant/iobc_toolchain.tar.gz /usr/bin
+tar -xtvf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 
 
