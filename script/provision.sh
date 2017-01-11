@@ -57,7 +57,7 @@ mv /home/ubuntu/libmsp430.so /usr/lib/
 #KubOS Linux setup
 echo "Installing KubOS Linux Toolchain"
 apt-get install -y libc6-i386 lib32stdc++6 lib32z1
-tar -xvf /home/ubuntu/iobc_toolchain.tar.gz -C /usr/bin
+tar -xf /home/ubuntu/iobc_toolchain.tar.gz -C /usr/bin
 rm /home/ubuntu/iobc_toolchain.tar.gz
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 
