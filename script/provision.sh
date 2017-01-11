@@ -21,7 +21,7 @@ wget -P /usr/lib https://github.com/kubostech/kubos/raw/vagrant-provision/vm/lib
 pip install --upgrade pip
 pip install kubos-cli
 kubos update
-mv ~/.kubos /home/vagrant/
+mv ~/.kubos /home/ubuntu/
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #libjim0.76
@@ -52,12 +52,13 @@ $TI_MSPGCC_DIR/install_scripts/msp430uif_install.sh
 
 apt-get -y dist-upgrade
 apt-get install -y mspdebug linux-image-extra-virtual
-mv /home/vagrant/libmsp430.so /usr/lib/
+mv /home/ubuntu/libmsp430.so /usr/lib/
 
 #KubOS Linux setup
 echo "Installing KubOS Linux Toolchain"
-tar -xvf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
-rm /home/vagrant/iobc_toolchain.tar.gz
+apt-get install -y libc6-i386 lib32stdc++6 lib32z1
+tar -xvf /home/ubuntu/iobc_toolchain.tar.gz -C /usr/bin
+rm /home/ubuntu/iobc_toolchain.tar.gz
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 
 apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
