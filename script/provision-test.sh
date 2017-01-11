@@ -1,11 +1,11 @@
 #!/bin/bash
-#README: This script only checks for programs to be installaed and accessible in the default PATH.
-#to add more programs to check for add them to the programs.txt file in the same directory.
-result=0
+#README: This script only checks for programs to be installed and accessible in the default PATH.
+#To add more programs to check for add them to the programs.txt file in the same directory.
+
 red='\E[31m'
 green='\E[32m'
 
-#Only intended to run inside the vagrant box Which has bash v4.x and has the readarray command
+#Only intended to run inside the vagrant box which has bash v4.x and has the readarray command
 readarray programs < programs.txt
 
 test_installed () {

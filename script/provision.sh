@@ -17,12 +17,14 @@ apt-get install -y cmake
 apt-get install -y gcc-msp430 gdb-msp430 msp430-libc
 
 # flash tools
-#apt-get udpate
 apt-get install -y mspdebug
 apt-get install -y dfu-util
 apt-get install -y openocd
 
-#since this is a private repo the url is unavaialble without authentication. An alternate temporary solution is on lines #29-32
+#Install kernel additions for better USB device recognition
+apt-get install -y linux-image-extra-virtual
+
+#Since this is a private repo the url is unavaialble without authentication. An alternate temporary solution is on lines #31-35
 # download libmsp430.so
 #wget -P /usr/lib https://github.com/kubostech/kubos/raw/vagrant-provision/vm/lib/libmsp430.so
 
@@ -38,8 +40,5 @@ pip install kubos-cli
 
 kubos update
 mv ~/.kubos /home/vagrant/
-
-apt-get install -y linux-image-extra-virtual
-apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 echo "Finishing provisioning..."
