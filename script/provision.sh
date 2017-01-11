@@ -33,12 +33,13 @@ apt-get install unzip
 wget -P ./libmsp430.so.zip https://github.com/kyleparrott/libmsp430/blob/master/libmsp430.so.zip?raw=true
 unzip libmsp430.so.zip
 mv libmsp430.so /usr/lib
+rm libmsp430.so.zip
 
 #do the pip setup and installation things
 pip install --upgrade pip
 pip install kubos-cli
 
 kubos update
-mv ~/.kubos /home/vagrant/
+mv ~/.kubos /home/ubuntu/
 
 echo "Finishing provisioning..."

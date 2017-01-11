@@ -8,6 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/xenial64"
   config.vm.provision "file", source: "./bin/libmsp430.so", destination: "~/libmsp430.so"
   config.vm.provision "shell", path: "./script/provision.sh"
+  config.vm.synced_folder ".", "/vagrant"
   # Enable USB access
   usb_devs = [
     # Required for programming new fraunchpad
