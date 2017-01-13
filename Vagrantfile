@@ -29,8 +29,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ['0x0483', '0x3748', 'STM32 STLink'],
     ['0x0483', '0x374b', 'STM32 STLink'],
     ['0x0483', '0xdf11', 'STM32 BOOTLOADER'],
-	#iOBC Devices
-	['0x0403', '0x6001', 'FTDI']
+    #iOBC Devices
+    ['0x0403', '0x6001', 'FTDI']
   ]
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 1024
