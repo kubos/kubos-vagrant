@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "./bin/libmsp430.so", destination: "~/libmsp430.so"
   config.vm.provision "file", source: "./bin/iobc_toolchain.tar.gz", destination: "~/iobc_toolchain.tar.gz"
   config.vm.provision "file", source: "./bin/minirc.kubos", destination: "~/minirc.kubos"
-  config.vm.provision "file", source: "./bin/ftdi_usb.rules", destination: "~/ftdi_usb.rules"
+  config.vm.provision "file", source: "./bin/ftdi-usb.rules", destination: "~/ftdi-usb.rules"
   config.vm.provision "shell", path: "./script/provision.sh"
   config.vm.synced_folder ".", "/vagrant"
   # Enable USB access

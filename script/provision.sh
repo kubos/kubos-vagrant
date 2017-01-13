@@ -48,7 +48,7 @@ apt-get install -y minicom
 apt-get install -y libc6-i386 lib32stdc++6 lib32z1
 tar -xf /home/ubuntu/iobc_toolchain.tar.gz -C /usr/bin
 mv /home/ubuntu/minirc.kubos /etc/minicom/minirc.kubos
-mv /home/ubuntu/ftdi_usb.rules /etc/udev/rules.d/ftdi_usb.rules
+mv /home/ubuntu/ftdi-usb.rules /etc/udev/rules.d/ftdi-usb.rules
 rm /home/ubuntu/iobc_toolchain.tar.gz
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 
