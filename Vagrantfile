@@ -8,6 +8,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "velocity42/xenial64"
   config.vm.provision "file", source: "./bin/libmsp430.so", destination: "~/libmsp430.so"
   config.vm.provision "file", source: "./bin/iobc_toolchain.tar.gz", destination: "~/iobc_toolchain.tar.gz"
+  config.vm.provision "file", source: "./bin/minirc.kubos", destination: "~/minirc.kubos"
+  config.vm.provision "file", source: "./bin/ftdi-usb.rules", destination: "~/ftdi-usb.rules"
   config.vm.provision "shell", path: "./script/provision.sh"
   config.vm.synced_folder ".", "/vagrant"
   # Enable USB access
@@ -26,7 +28,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #STM Devices
     ['0x0483', '0x3748', 'STM32 STLink'],
     ['0x0483', '0x374b', 'STM32 STLink'],
-    ['0x0483', '0xdf11', 'STM32 BOOTLOADER']
+    ['0x0483', '0xdf11', 'STM32 BOOTLOADER'],
+    #iOBC Devices
+    ['0x0403', '0x6001', 'FTDI']
   ]
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 2048

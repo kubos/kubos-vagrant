@@ -39,7 +39,7 @@ apt-get install unzip
 wget -P ./libmsp430.so.zip https://github.com/kyleparrott/libmsp430/blob/master/libmsp430.so.zip?raw=true
 unzip libmsp430.so.zip
 mv libmsp430.so /usr/lib
-rm libmsp430.so.zip
+rm -rf libmsp430.so.zip
 
 #do the pip setup and installation things
 pip install --upgrade pip
@@ -62,8 +62,11 @@ echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 #KubOS Linux setup
 echo "Installing KubOS Linux Toolchain"
+apt-get install -y minicom
 apt-get install -y libc6-i386 lib32stdc++6 lib32z1
 tar -xf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
+mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
+mv /home/vagrant/ftdi-usb.rules /etc/udev/rules.d/ftdi-usb.rules
 rm /home/vagrant/iobc_toolchain.tar.gz
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 
