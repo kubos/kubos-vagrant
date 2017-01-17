@@ -5,7 +5,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "velocity42/xenial64"
   config.vm.provision "file", source: "./bin/libmsp430.so", destination: "~/libmsp430.so"
   config.vm.provision "shell", path: "./script/provision.sh"
   config.vm.synced_folder ".", "/vagrant"
@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ['0x0483', '0xdf11', 'STM32 BOOTLOADER']
   ]
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = 1024
+    vb.memory = 2048
     vb.customize ['modifyvm', :id, '--usb', 'on']
     vb.customize ["modifyvm", :id, "--usbehci", "on"]
     usb_devs.each do |dev|
