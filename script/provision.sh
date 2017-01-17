@@ -63,8 +63,8 @@ echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 #KubOS Linux setup
 echo "Installing KubOS Linux Toolchain"
 apt-get install -y libc6-i386 lib32stdc++6 lib32z1
-tar -xf /home/ubuntu/iobc_toolchain.tar.gz -C /usr/bin
-rm /home/ubuntu/iobc_toolchain.tar.gz
+tar -xf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
+rm /home/vagrant/iobc_toolchain.tar.gz
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 
 echo "Finishing provisioning..."
