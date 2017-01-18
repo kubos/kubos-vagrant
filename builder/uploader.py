@@ -1,5 +1,5 @@
 '''
-This is the upload script for packaing the final box package and uploading it to the Vagrant Cloud
+This is the upload script for packaging the final box package and uploading it to the Vagrant Cloud
 '''
 
 import argparse
@@ -53,7 +53,7 @@ def validate_path(path):
 def package_box(path):
     validate_path(path)
 
-    print 'Starting Box Packaing Process'
+    print 'Starting Box Packaging Process'
     print '\n====================================\n'
     #This should be replaced with a vagrant python wrapper rather than a shell command in the future
     output = run_cmd('vagrant', 'package')
@@ -189,10 +189,12 @@ def main():
 
     parser.add_argument('--package',
                         action='store_true',
+                        default=False,
                         help='Only package the package.box image but do no upload it to the Vagrant Cloud')
 
     parser.add_argument('--upload',
                         action='store_true',
+                        default=False,
                         help='Skip the building and upload the box')
 
     parser.add_argument('--box',
