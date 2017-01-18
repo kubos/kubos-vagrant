@@ -10,7 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "./bin/iobc_toolchain.tar.gz", destination: "~/iobc_toolchain.tar.gz"
   config.vm.provision "file", source: "./bin/minirc.kubos", destination: "~/minirc.kubos"
   config.vm.provision "file", source: "./bin/ftdi-usb.rules", destination: "~/ftdi-usb.rules"
-  config.vm.provision "shell", path: "./script/provision.sh"
+  config.vm.provision "shell", path: "./script/privileged-provision.sh"
+  config.vm.provision "shell", path: "./script/non-privileged-provision.sh", privileged: false
   config.vm.synced_folder ".", "/vagrant"
   # Enable USB access
   usb_devs = [

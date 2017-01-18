@@ -17,7 +17,6 @@ apt-get upgrade -y python2.7
 apt-get install -y build-essential libssl-dev libffi-dev libhidapi-hidraw0
 apt-get install -y python-setuptools build-essential ninja-build python-dev libffi-dev libssl-dev
 apt-get install -y gcc-arm-embedded
-apt-get install -y python-pip
 apt-get install -y git
 apt-get install -y cmake
 apt-get install -y gcc-msp430 gdb-msp430 msp430-libc
@@ -42,11 +41,11 @@ mv libmsp430.so /usr/lib
 rm -rf libmsp430.so.zip
 
 #do the pip setup and installation things
+easy_install pip
 pip install --upgrade pip
+pip install pysocks #Temporary - This will be added to the kubos-cli requirements.txt
 pip install kubos-cli
 
-kubos update || true
-mv ~/.kubos /home/vagrant/ || true
 
 #Change the ssh key to the default vagrant insecure key so others can ssh in when they start this box locally
 echo " Changing SSH keys"
@@ -70,4 +69,11 @@ mv /home/vagrant/ftdi-usb.rules /etc/udev/rules.d/ftdi-usb.rules
 rm /home/vagrant/iobc_toolchain.tar.gz
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 
-echo "Finishing provisioning..."
+mkdir -p /usr/local/lib/yotta_modules
+mkdir -p /usr/local/lib/yotta_targets
+mkdir -p /home/vagrant/.kubos
+chown -R vagrant /home/vagrant/.kubos
+chown -R vagrant /usr/local/lib/yotta_modules
+chown -R vagrant /usr/local/lib/yotta_targets
+
+echo "Finished root provisioning"
