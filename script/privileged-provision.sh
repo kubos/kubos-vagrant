@@ -1,8 +1,8 @@
 #These start an interactive prompt - I can't figure out how to fix it yet...
 sudo apt-mark hold grub-common grub-pc grub-pc-bin grub2-common
 
-yes | apt-get upgrade -y #Pipe in yes beacause a package still requires more input beyond the -y option
-apt-get -y dist-upgrade
+apt-get update
+yes | apt-get -y dist-upgrade
 apt-get install -y software-properties-common
 
 add-apt-repository -y ppa:team-gcc-arm-embedded/ppa
