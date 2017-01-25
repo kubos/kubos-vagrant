@@ -5,12 +5,13 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "velocity42/xenial64"
   config.vm.provision "file", source: "./bin/libmsp430.so", destination: "~/libmsp430.so"
   config.vm.provision "file", source: "./bin/iobc_toolchain.tar.gz", destination: "~/iobc_toolchain.tar.gz"
   config.vm.provision "file", source: "./bin/minirc.kubos", destination: "~/minirc.kubos"
   config.vm.provision "file", source: "./bin/ftdi-usb.rules", destination: "~/ftdi-usb.rules"
-  config.vm.provision "shell", path: "./script/provision.sh"
+  config.vm.provision "shell", path: "./script/privileged-provision.sh"
+  config.vm.provision "shell", path: "./script/non-privileged-provision.sh", privileged: false
   config.vm.synced_folder ".", "/vagrant"
   # Enable USB access
   usb_devs = [
@@ -33,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ['0x0403', '0x6001', 'FTDI']
   ]
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = 1024
+    vb.memory = 2048
     vb.customize ['modifyvm', :id, '--usb', 'on']
     vb.customize ["modifyvm", :id, "--usbehci", "on"]
     usb_devs.each do |dev|
