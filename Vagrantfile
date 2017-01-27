@@ -12,6 +12,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "./bin/ftdi-usb.rules", destination: "~/ftdi-usb.rules"
   config.vm.provision "shell", path: "./script/privileged-provision.sh"
   config.vm.provision "shell", path: "./script/non-privileged-provision.sh", privileged: false
+  config.vm.provision "test",        type: "shell", path: "./script/provision-test.sh"
+  config.vm.provision "pre-package", type: "shell", path: "./script/pre-package.sh"
   config.vm.synced_folder ".", "/vagrant"
   # Enable USB access
   usb_devs = [
