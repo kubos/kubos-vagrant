@@ -7,7 +7,6 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "velocity42/xenial64"
   config.vm.provision "file", source: "./bin/libmsp430.so", destination: "~/libmsp430.so"
-  config.vm.provision "file", source: "./bin/iobc_toolchain.tar.gz", destination: "~/iobc_toolchain.tar.gz"
   config.vm.provision "file", source: "./bin/minirc.kubos", destination: "~/minirc.kubos"
   config.vm.provision "file", source: "./bin/ftdi-usb.rules", destination: "~/ftdi-usb.rules"
   config.vm.provision "shell", path: "./script/privileged-provision.sh"
