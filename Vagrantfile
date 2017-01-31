@@ -15,6 +15,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "test",        type: "shell", path: "./script/provision-test.sh"
   config.vm.provision "pre-package", type: "shell", path: "./script/pre-package.sh"
   config.vm.synced_folder ".", "/vagrant"
+
+  #To mount a specific directory into your box uncomment the next line and change the following paths to match your host directory and a desired mount point in the box.
+  config.vm.synced_folder "/Users/kyleparrott/Code", "/Users/kyleparrott/Code"
+  #config.vm.synced_folder "/path/on/host", "/path/in/vagrant/box"
+  #IMPORTANT: AFTER MODIFYING THIS FILE YOU MUST RUN `vagrant reload` FOR THESE CHANGES TO TAKE EFFECT IF THE BOX IS ALREADY RUNNING
+
   # Enable USB access
   usb_devs = [
     # Required for programming new fraunchpad
