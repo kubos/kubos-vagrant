@@ -1,4 +1,20 @@
+# Kubos SDK
+# Copyright (C) 2017 Kubos Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 import argparse
+
 from utils import clean_build
 from provision import provision_box
 from package   import package_box
@@ -7,44 +23,42 @@ from uploader  import upload_box
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Package and upload the kubos-sdk vagrant box and upload it to the Vagrant Cloud')
+        description='Package and upload the kubos-sdk vagrant box and upload it to the Vagrant Cloud.')
 
     parser.add_argument('version',
                         nargs=1,
-                        help='Specify the version of the upload')
+                        help='Specify the version of the upload.')
 
     parser.add_argument('--all',
                         action='store_true',
                         default=False,
-                        help='Provision, Package and Upload the box to Atlas')
+                        help='Provision, Package and Upload the box to Vagrant Cloud.')
 
     parser.add_argument('--clean',
                         action='store_true',
                         default=False,
-                        help='Delete any pre-existing build files for this version and rebuild from scratch')
+                        help='Delete any pre-existing build files for this version and rebuild from scratch.')
 
     parser.add_argument('--provision',
                         action='store_true',
                         default=False,
-                        help='Only provision the box but do not package or upload it')
+                        help='Only provision the box but do not package or upload it.')
 
     parser.add_argument('--provision-no-clone',
                         action='store_true',
                         default=False,
-                        help='Provision the box without trying to reclone the repo')
+                        help='Provision the box without trying to reclone the repo.')
 
     parser.add_argument('--package',
                         action='store_true',
                         default=False,
-                        help='Only package the package.box image but do no upload it to the Vagrant Cloud')
+                        help='Skip provisioning and uploading the box. Only package the box.')
 
     parser.add_argument('--upload',
                         action='store_true',
                         default=False,
-                        help='Skip the provisioning and building steps. Only upload the box')
+                        help='Skip the provisioning and building steps. Only upload the box.')
 
-    #The following 2 options are useful when an upload fails and needs to be re-run
-    #Creating either the version or provider twice will cause a failure
     parser.add_argument('--upload-no-create-version',
                         action='store_false',
                         default=True,
@@ -74,11 +88,11 @@ def main():
     if args.clean_build:
         clean_build(args)
 
-    if args.all or args.provision_only:
+    if args.all or args.provision:
         provision_box(args)
-    if args.all or args.package_only:
+    if args.all or args.package:
         package_box(args)
-    if args.all or args.upload_only:
+    if args.all or args.upload:
             upload_box(args)
 
 if __name__ == '__main__':
