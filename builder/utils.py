@@ -1,39 +1,42 @@
 import git
 import os
 import sys
+import shutil
 import subprocess
 
-VAGRANT_FILE  = 'Vagrantfile'
 
 class BoxAutomator(object):
     ACCESS_TOKEN = None
     BOX_NAME = 'kubos'
     BOX_FILE_NAME = 'package.box' # This is the default name given from `vagrant package`
-    CURL = 'curl'
+    KUBOS_BUILD_DIR = 'KUBOS_BUILD_DIR'
     PROVIDER = 'virtualbox'
     USER_NAME = 'kubostech'
-
+    VAGRANT_FILE  = 'Vagrantfile'
+    VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
     BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (USER_NAME, BOX_NAME)
 
     def __init__(self, version):
-        self.BASE_DIR = os.environ[self.KUBOS_BUILD_DIR] if self.KUBOS_BUILD_DIR in os.environ else os.getcwd()
+        self.version = version
+        self.BASE_DIR = os.environ[self.KUBOS_BUILD_DIR] if self.KUBOS_BUILD_DIR in os.environ else '/Users/kyleparrott/Code/kubos/kubos-vagrant/builder'
         self.BUILD_DIR = os.path.join(self.BASE_DIR, 'builds')
         self.VERSION_DIR = os.path.join(self.BUILD_DIR, self.version)
         self.LOG_DIR = os.path.join(self.VERSION_DIR, 'logs')
-        self.version = version
         self.setup_dirs()
 
 
     def setup_dirs(self):
-        mkdir(self.BASE_DIR)
-        mkdir(self.BUILD_DIR)
-        mkdir(self.VERSION_DIR)
+        self.mkdir(self.BASE_DIR)
+        self.mkdir(self.BUILD_DIR)
+        self.mkdir(self.VERSION_DIR)
         self.VERSION_GIT_DIR = os.path.join(self.VERSION_DIR, '.git')
-
-        # repo = clone_repo(VERSION_DIR, VAGRANT_REPO_URL)
-        mkdir(self.LOG_DIR)
-        # checkout_tag(temp_version)
         os.chdir(self.VERSION_DIR)
+
+
+    def check_log_dir(self):
+        #Because cloning requires an empty directory we have to make the log directory at a later time.
+        if not os.path.isdir(self.LOG_DIR):
+            self.mkdir(self.LOG_DIR)
 
 
     def clone_repo(self, repo_dir, repo_url):
@@ -44,7 +47,7 @@ class BoxAutomator(object):
                 print 'Successfully cloned repo: %s' % repo_url
             else:
                 repo = git.Repo(repo_dir)
-            fetch_tags(repo)
+            self.fetch_tags(repo)
             return repo
         except git.exc.GitCommandError as e:
             print 'Error: there was an error accessing the remote git repository...'
@@ -66,6 +69,7 @@ class BoxAutomator(object):
 
 
     def mkdir(self, path):
+        print 'maiking directory: %s' % path
         if not os.path.isdir(path):
             os.makedirs(path)
 
@@ -73,19 +77,26 @@ class BoxAutomator(object):
     def validate_path(self, path):
         if not path:
             print 'path was not provided using default path..'
-            path = os.path.join(os.getcwd())
-        if os.path.isfile(path): #if it's pointing to a Vagrantfile - we want the directory name
-            path = os.path.dirname(path)
-        if not VAGRANT_FILE in os.listdir(path):
+            self.path = os.path.join(os.getcwd())
+        if os.path.isfile(self.path): #if it's pointing to a Vagrantfile - we want the directory name
+            self.path = os.path.dirname(self.path)
+        if not self.VAGRANT_FILE in os.listdir(self.path):
             print >>sys.stderr, 'Error: %s is not a valid path to a Vagrantfile or to a valid box directory' % path
             sys.exit(1)
-        os.chdir(path)
-        return os.path.join(path, BOX_FILE_NAME)
+        os.chdir(self.path)
+
+
+    def validate_box_path(self, args):
+        #validate_box_path is only called from the upload file - which requires a valid package.box file
+        #to be functional
+        self.validate_path(args.box)
+        self.box_path = os.path.join(self.path, self.BOX_FILE_NAME)
+        if not os.path.isfile(self.box_path):
+            print >> sys.stderr, 'Error: The requested upload path: %s is not a vaild package.box file' % self.box_path
 
 
     def run_cmd(self, *args, **kwargs):
         cwd = kwargs.get('cwd', os.getcwd())
-
         print ' '.join(args)
 
         try:
@@ -93,4 +104,16 @@ class BoxAutomator(object):
         except subprocess.CalledProcessError, e:
             print >>sys.stderr, 'Error executing command %s' % (args)
             sys.exit(1)
+
+
+    def clean(self):
+        if os.path.isdir(self.VERSION_DIR):
+            print 'Cleaning existing build directory %s' % self.VERSION_DIR
+            shutil.rmtree(self.VERSION_DIR)
+            self.setup_dirs()
+
+
+def clean_build(args):
+    automator = BoxAutomator(args.version)
+    automator.clean()
 
