@@ -1,6 +1,6 @@
 #!/bin/bash
 #README: This script only checks for programs to be installed and accessible in the default PATH.
-#To add more programs to check for add them to the programs.txt file in the same directory.
+#To add more programs to check for add them to the programs array.
 
 red='\E[31m'
 green='\E[32m'
