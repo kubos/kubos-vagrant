@@ -1,12 +1,22 @@
 #!/bin/bash
 #README: This script only checks for programs to be installed and accessible in the default PATH.
-#To add more programs to check for add them to the programs.txt file in the same directory.
+#To add more programs to check for add them to the programs array.
 
 red='\E[31m'
 green='\E[32m'
 
-#Only intended to run inside the vagrant box which has bash v4.x and has the readarray command
-readarray programs < programs.txt
+programs=(
+    arm-none-eabi-gcc
+    arm-none-eabi-gdb
+    cmake
+    dfu-util
+    lsusb
+    msp430-gcc
+    msp430-gdb
+    mspdebug
+    python
+    openocd
+)
 
 test_installed () {
     if command -v $1 > /dev/null
