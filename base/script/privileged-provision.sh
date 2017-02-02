@@ -55,7 +55,6 @@ mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
 mv /home/vagrant/ftdi-usb.rules /etc/udev/rules.d/ftdi-usb.rules
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 adduser vagrant dialout
-chmod a+rw /dev/FTDI
 
 #Vagrant commands may act funny without password-less sudo
 echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
