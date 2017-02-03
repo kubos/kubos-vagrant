@@ -27,16 +27,11 @@ apt-get install -y openocd
 #Install kernel additions for better USB device recognition
 apt-get install -y linux-image-extra-virtual
 
-#Since this is a private repo the url is unavailable without authentication. An alternate temporary solution is on lines #31-35
-# download libmsp430.so
-#wget -P /usr/lib https://github.com/kubostech/kubos/raw/vagrant-provision/vm/lib/libmsp430.so
-
-#Temporary fix for private repo hosting the libmsp430.so binary
+#libmsp430.so is mounted from the bin/ directory
 apt-get install unzip
-wget -P ./libmsp430.so.zip https://github.com/kyleparrott/libmsp430/blob/master/libmsp430.so.zip?raw=true
 unzip libmsp430.so.zip
 mv libmsp430.so /usr/lib
-rm -rf libmsp430.so.zip
+rm -rf libmsp430.so.zip libmsp430.so
 
 #do the pip setup and installation things
 easy_install pip
