@@ -5,7 +5,6 @@ mkdir -p /usr/local/lib/yotta_modules
 mkdir -p /usr/local/lib/yotta_targets
 mkdir -p /home/vagrant/.kubos
 chown -R vagrant /home/vagrant/.kubos
-chown -R vagrant /usr/local/lib/yotta_modules
-chown -R vagrant /usr/local/lib/yotta_targets
+chown -R vagrant /usr/local/lib/
 
 echo "Finished root provisioning"
