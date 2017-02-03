@@ -27,16 +27,11 @@ apt-get install -y openocd
 #Install kernel additions for better USB device recognition
 apt-get install -y linux-image-extra-virtual
 
-#Since this is a private repo the url is unavailable without authentication. An alternate temporary solution is on lines #31-35
-# download libmsp430.so
-#wget -P /usr/lib https://github.com/kubostech/kubos/raw/vagrant-provision/vm/lib/libmsp430.so
-
-#Temporary fix for private repo hosting the libmsp430.so binary
+#libmsp430.so is mounted from the bin/ directory
 apt-get install unzip
-wget -P ./libmsp430.so.zip https://github.com/kyleparrott/libmsp430/blob/master/libmsp430.so.zip?raw=true
 unzip libmsp430.so.zip
 mv libmsp430.so /usr/lib
-rm -rf libmsp430.so.zip
+rm -rf libmsp430.so.zip libmsp430.so
 
 #do the pip setup and installation things
 easy_install pip
@@ -48,7 +43,7 @@ echo "Installing KubOS Linux Toolchain"
 apt-get install -y minicom
 apt-get install -y libc6-i386 lib32stdc++6 lib32z1
 
-wget http://portal.kubos.co/bin/iobc_toolchain.tar.gz
+wget https://s3-us-west-2.amazonaws.com/kubos-sdk-provisioning/iobc-toolchain/iobc_toolchain.tar.gz
 tar -xf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/iobc_toolchain.tar.gz
 mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
