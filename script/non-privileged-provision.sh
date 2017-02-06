@@ -1,3 +1,0 @@
-kubos update || true #Can't run as root or else yotta symlinks are created to /root/.kubos/...
-
-echo "Finishing provisioning..."
