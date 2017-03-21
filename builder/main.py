@@ -1,3 +1,5 @@
+#!/usr/local/bin/python
+
 # Kubos SDK
 # Copyright (C) 2017 Kubos Corporation
 #
@@ -20,10 +22,26 @@ from provision import provision_box
 from package   import package_box
 from uploader  import upload_box
 
+def build_box(args):
+    if args.clean:
+        clean(args)
+
+    if args.all or args.provision:
+        provision_box(args)
+    if args.all or args.package:
+        package_box(args)
+    if args.all or args.upload:
+            upload_box(args)
+
 
 def main():
     parser = argparse.ArgumentParser(
         description='Package and upload the kubos-sdk vagrant box and upload it to the Vagrant Cloud.')
+
+    parser.add_argument('box_name',
+                        nargs=1,
+                        choices=['all', 'base', 'kubos-dev'],
+                        help='Specify the vagrant box name')
 
     parser.add_argument('version',
                         nargs=1,
@@ -85,15 +103,15 @@ def main():
 
     args, following_args = parser.parse_known_args()
     args.version = args.version[0] #version is initally a list of 1 element
-    if args.clean_build:
-        clean_build(args)
+    args.box_name = args.box_name[0]
+    if args.box_name == 'all':
+        args.box_name = 'base'
+        build_box(args)
+        args.box_name = 'kubos-dev'
+        build_box(args)
+    else:
+        build_box(args)
 
-    if args.all or args.provision:
-        provision_box(args)
-    if args.all or args.package:
-        package_box(args)
-    if args.all or args.upload:
-            upload_box(args)
 
 if __name__ == '__main__':
     main()

@@ -2,7 +2,6 @@
 sudo apt-mark hold grub-common grub-pc grub-pc-bin grub2-common
 
 apt-get update
-yes | apt-get -y dist-upgrade
 apt-get install -y software-properties-common
 
 add-apt-repository -y ppa:team-gcc-arm-embedded/ppa

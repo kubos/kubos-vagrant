@@ -21,15 +21,22 @@ import vagrant
 from utils import BoxAutomator
 
 class BoxProvisioner(BoxAutomator):
+    provision_steps = {
+                        'base' :      ['privileged',
+                                       'pre-package'],
+                        'kubos-dev' : ['privileged',
+                                       'non-priveleged',
+                                       'test',
+                                       'pre-package']
+                      }
 
-    def __init__(self, version):
-        super(BoxProvisioner, self).__init__(version)
+    def __init__(self, name, version):
+        super(BoxProvisioner, self).__init__(name, version)
 
 
     def clone_vagrant_repo(self):
         if not os.path.isfile(self.VERSION_GIT_DIR):
             self.clone_repo(self.VERSION_DIR, self.VAGRANT_REPO_URL)
-        # checkout_tag(self.version)
 
     def run_provision_step(self, step, **kwargs):
         self.check_log_dir()
@@ -38,14 +45,23 @@ class BoxProvisioner(BoxAutomator):
         print 'logging to file: %s' % self.step_log + '-' + 'output.log'
         v = vagrant.Vagrant(out_cm=log_cm, err_cm=log_cm)
         try:
-            v.up(**kwargs)
+            v.up(provision_with=[step], **kwargs)
         except subprocess.CalledProcessError as e:
             print>>sys.stderr, 'Error: The provision step %s failed with error code %i.\nSee the provision log for details: %s' % (step, e.returncode, self.step_log)
             sys.exit(1)
 
 
+    def provision(self):
+        self.box_dir = os.path.join(os.getcwd(), self.name)
+        if not os.path.isdir(self.box_dir):
+            print >>sys.stderr, "The requested box directory: %s does not exist" % self.box_dir
+            sys.exit(1)
+        os.chdir(self.box_dir)
+        steps = self.provision_steps[self.name]
+        for step in steps:
+            self.run_provision_step(step)
     def run_initial_provision(self):
-        self.run_provision_step('initial', provision_with=['privileged', 'non-privilegjd'])
+        self.run_provision_step('initial', provision_with=['privileged', 'non-privileged'])
 
 
     def run_test_provision(self):
@@ -57,11 +73,9 @@ class BoxProvisioner(BoxAutomator):
 
 
 def provision_box(args):
-    provisioner = BoxProvisioner(args.version)
+    provisioner = BoxProvisioner(args.box_name, args.version)
     if not args.provision_no_clone:
         provisioner.clone_vagrant_repo()
-    provisioner.run_initial_provision()
-    provisioner.run_test_provision()
-    provisioner.run_pre_package_provision()
+    provisioner.provision()
     print 'Provisioning successfully completed...'
 

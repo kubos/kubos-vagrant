@@ -30,9 +30,9 @@ class BoxUploader(BoxAutomator):
     PROVIDER = 'virtualbox'
     USER_NAME = 'kubostech'
 
-    def __init__(self, version):
-        super(BoxUploader, self).__init__(version)
-        BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (self.USER_NAME, self.BOX_NAME)
+    def __init__(self, name, version):
+        super(BoxUploader, self).__init__(name, version)
+        self.BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (self.USER_NAME, self.name)
         self.ACCESS_TOKEN = os.environ['VAGRANT_CLOUD_ACCESS_TOKEN']
 
         if self.ACCESS_TOKEN is None:
@@ -124,13 +124,12 @@ def upload_box(args):
     6) Get the version status and make sure the hosted token matches our upload token from step 3
        to make sure the released box matches the same one we uploaded.
     '''
-    uploader = BoxUploader(args.version)
+    uploader = BoxUploader(args.box_name, args.version)
 
     success_key = 'success'
     errors_key  = 'errors'
 
     uploader.validate_box_path(args)
-    import pdb;pdb.set_trace()
     if args.all or args.upload_no_create_version:
         create_version_response = uploader.create_version()
     if args.all or args.upload_no_create_provider:

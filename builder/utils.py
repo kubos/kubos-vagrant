@@ -31,7 +31,8 @@ class BoxAutomator(object):
     VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
     BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (USER_NAME, BOX_NAME)
 
-    def __init__(self, version):
+    def __init__(self, name, version):
+        self.name = name
         self.version = version
         self.BASE_DIR = os.environ[self.KUBOS_BUILD_DIR] if self.KUBOS_BUILD_DIR in os.environ else '/Users/kyleparrott/Code/kubos/kubos-vagrant/builder'
         self.BUILD_DIR = os.path.join(self.BASE_DIR, 'builds')
@@ -92,7 +93,7 @@ class BoxAutomator(object):
     def validate_path(self, path):
         if not path:
             print 'path was not provided using default path..'
-            self.path = os.path.join(os.getcwd())
+            self.path = os.path.join(os.getcwd(), self.name)
         if os.path.isfile(self.path): #if it's pointing to a Vagrantfile - we want the directory name
             self.path = os.path.dirname(self.path)
         if not self.VAGRANT_FILE in os.listdir(self.path):

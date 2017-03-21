@@ -18,8 +18,8 @@ from utils import BoxAutomator
 
 class BoxPackager(BoxAutomator):
 
-    def __init__(self, version):
-        super(BoxPackager, self).__init__(version)
+    def __init__(self, name, version):
+        super(BoxPackager, self).__init__(name, version)
 
 
     def package(self, args):
@@ -36,6 +36,6 @@ class BoxPackager(BoxAutomator):
 
 
 def package_box(args):
-    packager = BoxPackager(args.version)
+    packager = BoxPackager(args.box_name, args.version)
     packager.package(args)
 
