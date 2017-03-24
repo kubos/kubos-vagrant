@@ -11,7 +11,7 @@ add-apt-repository -y ppa:git-core/ppa
 add-apt-repository -y ppa:fkrull/deadsnakes-python2.7
 apt-get update
 
-apt-get upgrade -y python2.7
+apt-get upgrade -y python2.7 ncurses-dev bc
 apt-get install -y build-essential libssl-dev libffi-dev libhidapi-hidraw0
 apt-get install -y python-setuptools build-essential ninja-build python-dev libffi-dev libssl-dev
 apt-get install -y gcc-arm-embedded
