@@ -37,6 +37,7 @@ class BoxProvisioner(BoxAutomator):
         if not os.path.isfile(self.VERSION_GIT_DIR):
             self.clone_repo(self.VERSION_DIR, self.VAGRANT_REPO_URL)
 
+
     def run_provision_step(self, step, **kwargs):
         self.check_log_dir()
         self.step_log = os.path.join(self.LOG_DIR, step)
@@ -59,6 +60,8 @@ class BoxProvisioner(BoxAutomator):
         steps = self.provision_steps[self.name]
         for step in steps:
             self.run_provision_step(step)
+
+
     def run_initial_provision(self):
         self.run_provision_step('initial', provision_with=['privileged', 'non-privileged'])
 
