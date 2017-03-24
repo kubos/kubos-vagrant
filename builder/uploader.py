@@ -1,4 +1,3 @@
-# Kubos SDK
 # Copyright (C) 2017 Kubos Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -130,9 +129,9 @@ def upload_box(args):
     errors_key  = 'errors'
 
     uploader.validate_box_path(args)
-    if args.all or args.upload_no_create_version:
+    if args.all or not args.upload_no_create_version:
         create_version_response = uploader.create_version()
-    if args.all or args.upload_no_create_provider:
+    if args.all or not args.upload_no_create_provider:
         create_provider_response = uploader.create_provider()
 
     status_response = uploader.get_upload_status()
@@ -145,10 +144,10 @@ def upload_box(args):
     upload_url   = status_data['upload_path']
     upload_token = status_data['token']
 
-    if args.all or args.upload_no_box_upload:
+    if args.all or not args.upload_no_box_upload:
         uploader.submit_upload(upload_url)
 
-    if args.all or args.upload_no_release:
+    if args.all or not args.upload_no_release:
         release_response = uploader.release_version()
         verification_response = uploader.get_version_status()
         hosted_token = verification_response.json()['hosted_token']

@@ -1,6 +1,5 @@
 #!/usr/local/bin/python
 
-# Kubos SDK
 # Copyright (C) 2017 Kubos Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,12 +30,12 @@ def build_box(args):
     if args.all or args.package:
         package_box(args)
     if args.all or args.upload:
-            upload_box(args)
+        upload_box(args)
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Package and upload the kubos-sdk vagrant box and upload it to the Vagrant Cloud.')
+        description='Package and upload the kubostech/base and/or kubostech/kubos-dev vagrant box and upload it to the Vagrant Cloud.')
 
     parser.add_argument('box_name',
                         nargs=1,
@@ -47,12 +46,12 @@ def main():
                         nargs=1,
                         help='Specify the version of the upload.')
 
-    parser.add_argument('--all',
+    parser.add_argument('-a', '--all',
                         action='store_true',
                         default=False,
                         help='Provision, Package and Upload the box to Vagrant Cloud.')
 
-    parser.add_argument('--clean',
+    parser.add_argument('-c', '--clean',
                         action='store_true',
                         default=False,
                         help='Delete any pre-existing build files for this version and rebuild from scratch.')
@@ -72,37 +71,37 @@ def main():
                         default=False,
                         help='Skip provisioning and uploading the box. Only package the box.')
 
-    parser.add_argument('--upload',
+    parser.add_argument('-u', '--upload',
                         action='store_true',
                         default=False,
                         help='Skip the provisioning and building steps. Only upload the box.')
 
     parser.add_argument('--upload-no-create-version',
-                        action='store_false',
-                        default=True,
+                        action='store_true',
+                        default=False,
                         help='Skip creating the version when uploading the box')
 
     parser.add_argument('--upload-no-create-provider',
-                        action='store_false',
-                        default=True,
+                        action='store_true',
+                        default=False,
                         help='Skip creating the provider when uploading the box')
 
     parser.add_argument('--upload-no-box-upload',
-                        action='store_false',
-                        default=True,
+                        action='store_true',
+                        default=False,
                         help='Skip the box upload step of the upload process')
 
     parser.add_argument('--upload-no-release',
-                        action='store_false',
-                        default=True,
+                        action='store_true',
+                        default=False,
                         help='Skip the release step after uploading the box')
 
-    parser.add_argument('--box',
+    parser.add_argument('-b', '--box',
                         default=None,
                         help='Specify a non-default Vagrant box directory (points to a Vagrantfile or the directory containing the Vagrant file)')
 
     args, following_args = parser.parse_known_args()
-    args.version = args.version[0] #version is initally a list of 1 element
+    args.version = args.version[0] #version is initially a list of 1 element
     args.box_name = args.box_name[0]
     if args.box_name == 'all':
         args.box_name = 'base'

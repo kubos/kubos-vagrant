@@ -1,4 +1,3 @@
-# Kubos SDK
 # Copyright (C) 2017 Kubos Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +33,7 @@ class BoxAutomator(object):
     def __init__(self, name, version):
         self.name = name
         self.version = version
-        self.BASE_DIR = os.environ[self.KUBOS_BUILD_DIR] if self.KUBOS_BUILD_DIR in os.environ else '/Users/kyleparrott/Code/kubos/kubos-vagrant/builder'
+        self.BASE_DIR = os.environ[self.KUBOS_BUILD_DIR] if self.KUBOS_BUILD_DIR in os.environ else os.path.dirname(__file__)
         self.BUILD_DIR = os.path.join(self.BASE_DIR, 'builds')
         self.VERSION_DIR = os.path.join(self.BUILD_DIR, self.version)
         self.LOG_DIR = os.path.join(self.VERSION_DIR, 'logs')
@@ -92,7 +91,7 @@ class BoxAutomator(object):
 
     def validate_path(self, path):
         if not path:
-            print 'path was not provided using default path..'
+            print 'Path was not provided. Using the default path...'
             self.path = os.path.join(os.getcwd(), self.name)
         if os.path.isfile(self.path): #if it's pointing to a Vagrantfile - we want the directory name
             self.path = os.path.dirname(self.path)

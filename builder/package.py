@@ -31,7 +31,7 @@ class BoxPackager(BoxAutomator):
             v.package()
             print 'Packaging completed successfully...'
         except subprocess.CalledProcessError as e:
-            print>>sys.stderr, 'Error: The package step failed'
+            print>>sys.stderr, 'Error: The package step failed %s' % e #print the error message from vagrant
             sys.exit(1)
 
 

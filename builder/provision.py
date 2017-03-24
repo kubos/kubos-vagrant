@@ -1,4 +1,3 @@
-# Kubos SDK
 # Copyright (C) 2017 Kubos Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,7 +41,7 @@ class BoxProvisioner(BoxAutomator):
         self.check_log_dir()
         self.step_log = os.path.join(self.LOG_DIR, step)
         log_cm = vagrant.make_file_cm(self.step_log + '-' + 'output.log')
-        print 'logging to file: %s' % self.step_log + '-' + 'output.log'
+        print 'Logging to file: %s' % self.step_log + '-' + 'output.log'
         v = vagrant.Vagrant(out_cm=log_cm, err_cm=log_cm)
         try:
             v.up(provision_with=[step], **kwargs)
