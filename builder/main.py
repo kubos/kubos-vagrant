@@ -35,7 +35,7 @@ def build_box(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Package and upload the kubostech/base and/or kubostech/kubos-dev vagrant box and upload it to the Vagrant Cloud.')
+        description='Provision and package the kubostech/base and/or kubostech/kubos-dev box and upload it to the Vagrant Cloud.')
 
     parser.add_argument('box_name',
                         nargs=1,
