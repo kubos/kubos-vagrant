@@ -5,6 +5,8 @@
 red='\E[31m'
 green='\E[32m'
 
+return_code=0
+
 programs=(
     arm-none-eabi-gcc
     arm-none-eabi-gdb
@@ -24,6 +26,7 @@ test_installed () {
         printf "$green$1 => found\n"
     else
         printf "$red$1 => not found\n" >&2
+        return_code=1
     fi
     tput sgr0 #reset to normal text output
 }
@@ -32,3 +35,5 @@ for prog in "${programs[@]}"
 do
     test_installed $prog
 done
+
+exit $return_code
