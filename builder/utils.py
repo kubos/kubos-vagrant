@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import git
+import json
 import os
 import sys
 import shutil
@@ -21,14 +22,9 @@ import subprocess
 
 class BoxAutomator(object):
     ACCESS_TOKEN = None
-    BOX_NAME = 'kubos'
-    BOX_FILE_NAME = 'package.box' # This is the default name given from `vagrant package`
+    STATUS_FILE_NAME = 'status.json'
     KUBOS_BUILD_DIR = 'KUBOS_BUILD_DIR'
-    PROVIDER = 'virtualbox'
-    USER_NAME = 'kubostech'
     VAGRANT_FILE  = 'Vagrantfile'
-    VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
-    BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (USER_NAME, BOX_NAME)
 
     def __init__(self, name, version):
         self.name = name
@@ -36,6 +32,7 @@ class BoxAutomator(object):
         self.BASE_DIR = os.environ[self.KUBOS_BUILD_DIR] if self.KUBOS_BUILD_DIR in os.environ else os.path.dirname(__file__)
         self.BUILD_DIR = os.path.join(self.BASE_DIR, 'builds')
         self.VERSION_DIR = os.path.join(self.BUILD_DIR, self.version)
+        self.STATUS_FILE = os.path.join(self.VERSION_DIR, self.STATUS_FILE_NAME)
         self.LOG_DIR = os.path.join(self.VERSION_DIR, 'logs')
         self.setup_dirs()
 
@@ -48,8 +45,62 @@ class BoxAutomator(object):
         os.chdir(self.VERSION_DIR)
 
 
-    def check_log_dir(self):
+    def load_status(self, path):
+        if os.path.isfile(path):
+            with open(path,'r') as data_file:
+                try:
+                    data = json.loads(data_file.read())
+                    return data
+                except:
+                    return None
+        return None
+
+
+    def save_status(self, status, path):
+        #status is a json encoded dict
+        with open(path, 'w') as status_file:
+            status_file.write(json.dumps(status))
+
+
+    def setup_status_file(self):
+        if os.path.isfile(self.STATUS_FILE):
+            data = self.load_status(self.STATUS_FILE)
+            if data is not None and not self.name in data:
+                data[self.name] = {}
+                self.save_status(data, self.STATUS_FILE)
+        else:
+            #The status file doesn't exist. Create it and add the current box to it.
+            js_data = json.loads('{ "%s" : {} }' % self.name)
+            self.save_status(js_data, self.STATUS_FILE)
+
+
+    def setup_status(self):
+        if not os.path.isfile(self.STATUS_FILE):
+            super(BoxProvisioner, self).setup_status_file()
+
+        data = self.load_status(self.STATUS_FILE)
+        if self.STATUS_KEY not in data[self.name]:
+            data[self.name][self.STATUS_KEY] = {}
+
+        for step in self.status_steps[self.name]:
+            data[self.name][self.STATUS_KEY][step] = False
+        self.save_status(data, self.STATUS_FILE)
+
+
+    def update_status(self, step):
+        #updating the status upon completion of a step
+        data = self.load_status(self.STATUS_FILE)
+        data[self.name][self.STATUS_KEY][step] = True
+        self.save_status(data, self.STATUS_FILE)
+
+
+    def post_clone_setup(self):
         #Because cloning requires an empty directory we have to make the log directory at a later time.
+        self.check_log_dir()
+        self.setup_status_file()
+
+
+    def check_log_dir(self):
         if not os.path.isdir(self.LOG_DIR):
             self.mkdir(self.LOG_DIR)
 
@@ -126,7 +177,6 @@ class BoxAutomator(object):
             print 'Cleaning existing build directory %s' % self.VERSION_DIR
             shutil.rmtree(self.VERSION_DIR)
             self.setup_dirs()
-
 
 def clean_build(args):
     automator = BoxAutomator(args.version)

@@ -16,10 +16,10 @@
 
 import argparse
 
-from utils import clean_build
+from utils     import clean_build
 from provision import provision_box
 from package   import package_box
-from uploader  import upload_box
+from upload    import upload_box
 
 def build_box(args):
     if args.clean:
@@ -31,6 +31,12 @@ def build_box(args):
         package_box(args)
     if args.all or args.upload:
         upload_box(args)
+
+def add_box():
+    #after building a box we need to add to our local vagrant installation so the 
+    #build hierarchy uses the new 'base' box instead of an older version.
+    pass
+
 
 
 def main():
@@ -106,6 +112,7 @@ def main():
     if args.box_name == 'all':
         args.box_name = 'base'
         build_box(args)
+        add_box()
         args.box_name = 'kubos-dev'
         build_box(args)
     else:

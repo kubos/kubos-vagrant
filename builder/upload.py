@@ -25,14 +25,36 @@ import sys
 from utils import BoxAutomator
 
 class BoxUploader(BoxAutomator):
+    BOX_FILE_NAME = 'package.box' # This is the default name given from `vagrant package`
+    BOX_NAME = 'kubos'
     CURL = 'curl'
     PROVIDER = 'virtualbox'
     USER_NAME = 'kubostech'
+    BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (USER_NAME, BOX_NAME)
+    STATUS_KEY = 'upload'
+
+    status_steps = {
+            'base':      ['create_version',
+                          'create_provider',
+                          'get_upload_status',
+                          'submit_upload',
+                          'release_version',
+                          'verify_release'],
+            'kubos-dev': ['create_version',
+                          'create_provider',
+                          'get_upload_status',
+                          'submit_upload',
+                          'release_version',
+                          'verify_release']
+
+                }
+
 
     def __init__(self, name, version):
         super(BoxUploader, self).__init__(name, version)
         self.BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (self.USER_NAME, self.name)
         self.ACCESS_TOKEN = os.environ['VAGRANT_CLOUD_ACCESS_TOKEN']
+        self.setup_status()
 
         if self.ACCESS_TOKEN is None:
             print >>sys.stderr, 'The VAGRANT_CLOUD_ACCESS_TOKEN environment variable needs to be set.'
@@ -57,6 +79,7 @@ class BoxUploader(BoxAutomator):
         }
         res = requests.post(create_url, headers=headers, data=data)
         self.check_http_response(res)
+        self.update_status('create_version')
         return res
 
 
@@ -71,6 +94,7 @@ class BoxUploader(BoxAutomator):
         }
         res = requests.post(create_url, headers=headers, data=data)
         self.check_http_response(res)
+        self.update_status('create_provider')
         return res
 
 
@@ -80,8 +104,8 @@ class BoxUploader(BoxAutomator):
                         % (self.BASE_URL, self.version, self.ACCESS_TOKEN)
         res = requests.get(status_url)
         self.check_http_response(res)
+        self.update_status('get_upload_status')
         return res
-
 
 
     def submit_upload(self,  upload_url):
@@ -91,6 +115,7 @@ class BoxUploader(BoxAutomator):
         # res = requests.put(upload_url, files=upload_file)
         # return res
         upload_response = self.run_cmd(self.CURL, '-X', 'PUT', '--upload-file', self.box_path, upload_url)
+        self.update_status('submit_upload')
 
 
     def release_version(self):
@@ -101,6 +126,7 @@ class BoxUploader(BoxAutomator):
         }
         res = requests.put(release_url, headers=headers)
         self.check_http_response(res)
+        self.update_status('release_version')
         return res
 
 
@@ -154,8 +180,8 @@ def upload_box(args):
 
         if upload_token == hosted_token:
             print 'Successfully uploaded and released box %s/%s version %s' % (uploader.USER_NAME, uploader.BOX_NAME, uploader.version)
+            uploader.update_status('verify_release')
         else:
             print >>sys.stderr, 'The upload and hosted tokens do not match - Something went wrong with the upload and release process'
             sys.exit(1)
-
 

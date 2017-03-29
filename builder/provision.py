@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 import subprocess
 import sys
@@ -20,7 +21,9 @@ import vagrant
 from utils import BoxAutomator
 
 class BoxProvisioner(BoxAutomator):
-    provision_steps = {
+    STATUS_KEY = 'provision'
+    VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
+    status_steps = {
                         'base' :      ['privileged',
                                        'pre-package'],
                         'kubos-dev' : ['privileged',
@@ -36,6 +39,7 @@ class BoxProvisioner(BoxAutomator):
     def clone_vagrant_repo(self):
         if not os.path.isfile(self.VERSION_GIT_DIR):
             self.clone_repo(self.VERSION_DIR, self.VAGRANT_REPO_URL)
+        self.post_clone_setup()
 
 
     def run_provision_step(self, step, **kwargs):
@@ -46,6 +50,7 @@ class BoxProvisioner(BoxAutomator):
         v = vagrant.Vagrant(out_cm=log_cm, err_cm=log_cm)
         try:
             v.up(provision_with=[step], **kwargs)
+            self.update_status(step)
         except subprocess.CalledProcessError as e:
             print>>sys.stderr, 'Error: The provision step %s failed with error code %i.\nSee the provision log for details: %s' % (step, e.returncode, self.step_log)
             sys.exit(1)
@@ -57,7 +62,8 @@ class BoxProvisioner(BoxAutomator):
             print >>sys.stderr, "The requested box directory: %s does not exist" % self.box_dir
             sys.exit(1)
         os.chdir(self.box_dir)
-        steps = self.provision_steps[self.name]
+        self.post_clone_setup()
+        steps = self.status_steps[self.name]
         for step in steps:
             self.run_provision_step(step)
 

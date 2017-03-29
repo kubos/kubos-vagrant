@@ -14,12 +14,19 @@
 # limitations under the License.
 
 import vagrant
+import subprocess
 from utils import BoxAutomator
 
 class BoxPackager(BoxAutomator):
+    STATUS_KEY = 'package'
+    status_steps = {
+            'base': ['package'],
+            'kubos-dev': ['package']
+            }
 
     def __init__(self, name, version):
         super(BoxPackager, self).__init__(name, version)
+        self.setup_status()
 
 
     def package(self, args):
@@ -29,7 +36,9 @@ class BoxPackager(BoxAutomator):
         v = vagrant.Vagrant()
         try:
             v.package()
+            self.update_status('package')
             print 'Packaging completed successfully...'
+
         except subprocess.CalledProcessError as e:
             print>>sys.stderr, 'Error: The package step failed %s' % e #print the error message from vagrant
             sys.exit(1)
