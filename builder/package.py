@@ -24,14 +24,16 @@ class BoxPackager(BoxAutomator):
             'kubos-dev': ['package']
             }
 
-    def __init__(self, name, version):
-        super(BoxPackager, self).__init__(name, version)
+    def __init__(self, args):
+        super(BoxPackager, self).__init__(args)
         self.setup_status()
 
 
     def package(self, args):
         self.validate_path(args.box)
-
+        if self.check_status('package'):
+            print 'Box has previuosly been packaged. Skipping the packaging step..'
+            return
         print 'Starting Box Packaging Process...'
         v = vagrant.Vagrant()
         try:
@@ -45,6 +47,6 @@ class BoxPackager(BoxAutomator):
 
 
 def package_box(args):
-    packager = BoxPackager(args.box_name, args.version)
+    packager = BoxPackager(args)
     packager.package(args)
 

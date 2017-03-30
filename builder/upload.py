@@ -50,8 +50,8 @@ class BoxUploader(BoxAutomator):
                 }
 
 
-    def __init__(self, name, version):
-        super(BoxUploader, self).__init__(name, version)
+    def __init__(self, args):
+        super(BoxUploader, self).__init__(args)
         self.BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (self.USER_NAME, self.name)
         self.ACCESS_TOKEN = os.environ['VAGRANT_CLOUD_ACCESS_TOKEN']
         self.setup_status()
@@ -69,6 +69,9 @@ class BoxUploader(BoxAutomator):
 
 
     def create_version(self):
+        if self.resume:
+            if self.check_status('create_version'):
+                print 'Version previously created.. Skipping...'
         print 'Attempting to create version %s' % self.version
         create_url = '%s/versions' % self.BASE_URL
         headers = {
@@ -84,6 +87,9 @@ class BoxUploader(BoxAutomator):
 
 
     def create_provider(self):
+        if self.resume:
+            if self.check_status('create_provider'):
+                print 'Provider previously created... Skipping...'
         print 'Creating Provider...'
         create_url = '%s/version/%s/providers' % (self.BASE_URL, self.version)
         headers = {
@@ -109,6 +115,9 @@ class BoxUploader(BoxAutomator):
 
 
     def submit_upload(self,  upload_url):
+        if self.resume:
+            if self.check_status('submit_upload'):
+                print 'Box previously uploaded... Skipping...'
         print 'Uploading box file %s' % self.path
         #The requests mulitpart file upload is being rejected by the Vagrant API - Just using a curl shell command for now
         # upload_file = {'file': open(path)}
@@ -119,6 +128,9 @@ class BoxUploader(BoxAutomator):
 
 
     def release_version(self):
+        if self.resume:
+            if self.check_status('release_version'):
+                print 'Version Previously Released... Skipping...'
         print 'Releasing Version: %s' % self.version
         release_url = '%s/version/%s/release' % (self.BASE_URL, self.version)
         headers = {
@@ -149,7 +161,7 @@ def upload_box(args):
     6) Get the version status and make sure the hosted token matches our upload token from step 3
        to make sure the released box matches the same one we uploaded.
     '''
-    uploader = BoxUploader(args.box_name, args.version)
+    uploader = BoxUploader(args)
 
     success_key = 'success'
     errors_key  = 'errors'

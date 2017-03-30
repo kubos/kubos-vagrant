@@ -52,6 +52,12 @@ def main():
                         nargs=1,
                         help='Specify the version of the upload.')
 
+    parser.add_argument('--no-resume',
+                        dest='resume',
+                        action='store_false',
+                        default=True,
+                        help='Do not resume from previous progress.')
+
     parser.add_argument('-a', '--all',
                         action='store_true',
                         default=False,

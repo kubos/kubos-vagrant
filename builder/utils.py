@@ -25,10 +25,12 @@ class BoxAutomator(object):
     STATUS_FILE_NAME = 'status.json'
     KUBOS_BUILD_DIR = 'KUBOS_BUILD_DIR'
     VAGRANT_FILE  = 'Vagrantfile'
+    resume = True
 
-    def __init__(self, name, version):
-        self.name = name
-        self.version = version
+    def __init__(self, args):
+        self.name = args.box_name
+        self.version = args.version
+        self.resume = args.resume
         self.BASE_DIR = os.environ[self.KUBOS_BUILD_DIR] if self.KUBOS_BUILD_DIR in os.environ else os.path.dirname(__file__)
         self.BUILD_DIR = os.path.join(self.BASE_DIR, 'builds')
         self.VERSION_DIR = os.path.join(self.BUILD_DIR, self.version)
@@ -44,6 +46,9 @@ class BoxAutomator(object):
         self.VERSION_GIT_DIR = os.path.join(self.VERSION_DIR, '.git')
         os.chdir(self.VERSION_DIR)
 
+    '''
+    Status Functions
+    '''
 
     def load_status(self, path):
         if os.path.isfile(path):
@@ -54,6 +59,16 @@ class BoxAutomator(object):
                 except:
                     return None
         return None
+
+
+    def check_status(self, step):
+        data = self.load_status(self.STATUS_FILE)
+        if data == None:
+            return None
+        if step in data[self.name][self.STATUS_KEY]:
+            return data[self.name][self.STATUS_KEY][step]
+        else:
+            return None
 
 
     def save_status(self, status, path):
@@ -83,7 +98,10 @@ class BoxAutomator(object):
             data[self.name][self.STATUS_KEY] = {}
 
         for step in self.status_steps[self.name]:
-            data[self.name][self.STATUS_KEY][step] = False
+            if step in data[self.name][self.STATUS_KEY]:
+                continue
+            else:
+                data[self.name][self.STATUS_KEY][step] = False
         self.save_status(data, self.STATUS_FILE)
 
 
@@ -93,6 +111,9 @@ class BoxAutomator(object):
         data[self.name][self.STATUS_KEY][step] = True
         self.save_status(data, self.STATUS_FILE)
 
+    '''
+    Git utility functions
+    '''
 
     def post_clone_setup(self):
         #Because cloning requires an empty directory we have to make the log directory at a later time.
@@ -133,6 +154,10 @@ class BoxAutomator(object):
             print 'There was an error checking out branch "%s"' % ref
             print 'The error details are: %s' %  sys.exc_info()[0]
 
+
+    '''
+    Generic utility functions
+    '''
 
     def mkdir(self, path):
         print 'maiking directory: %s' % path
