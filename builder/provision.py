@@ -23,6 +23,7 @@ from utils import BoxAutomator
 class BoxProvisioner(BoxAutomator):
     STATUS_KEY = 'provision'
     VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
+    DUMP_LOG_LINES = 50 #Number of lines to dump from end of logs on an error
     status_steps = {
                         'base' :      ['privileged',
                                        'pre-package'],
@@ -53,16 +54,22 @@ class BoxProvisioner(BoxAutomator):
                 self.setup_status_file()
                 return self.run_provision_step(step)
         self.check_log_dir()
-        self.step_log = os.path.join(self.LOG_DIR, step)
-        log_cm = vagrant.make_file_cm(self.step_log + '-' + 'output.log')
-        print 'Logging to file: %s' % self.step_log + '-' + 'output.log'
+        self.step_log = os.path.join(self.LOG_DIR, step + '-' + 'output.log')
+        log_cm = vagrant.make_file_cm(self.step_log)
+        print 'Logging to file: %s' % self.step_log
         v = vagrant.Vagrant(out_cm=log_cm, err_cm=log_cm)
         try:
             v.up(provision_with=[step], **kwargs)
             self.update_status(step)
         except subprocess.CalledProcessError as e:
-            print>>sys.stderr, 'Error: The provision step %s failed with error code %i.\nSee the provision log for details: %s' % (step, e.returncode, self.step_log)
+            print>>sys.stderr, 'Error: The provision step %s failed with error code %i.' % (step, e.returncode)
+            self.dump_log(self.step_log)
             sys.exit(1)
+
+
+    def dump_log(self):
+        print 'Dumping last %i lines of log: %s' %  (self.step_log, self.DUMP_LOG_LINES)
+        self.run_cmd('tail', '-n', self.DUMP_LOG_LINES, self.step_log)
 
 
     def provision(self):
