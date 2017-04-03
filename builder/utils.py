@@ -203,6 +203,7 @@ class BoxAutomator(object):
             shutil.rmtree(self.VERSION_DIR)
             self.setup_dirs()
 
+
 def clean_build(args):
     automator = BoxAutomator(args.version)
     automator.clean()

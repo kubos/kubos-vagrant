@@ -35,7 +35,12 @@ class BoxProvisioner(BoxAutomator):
 
     def __init__(self, args):
         super(BoxProvisioner, self).__init__(args)
+        if self.name == 'kubos-dev':
+            self.update_base_box()
 
+    def update_base_box(self):
+        print 'Updating the base box'
+        self.run_cmd('vagrant', 'box', 'update', '--box', 'kubostech/base', '--provider', 'virtualbox')
 
     def clone_vagrant_repo(self):
         if not os.path.isfile(self.VERSION_GIT_DIR):
@@ -63,13 +68,13 @@ class BoxProvisioner(BoxAutomator):
             self.update_status(step)
         except subprocess.CalledProcessError as e:
             print>>sys.stderr, 'Error: The provision step %s failed with error code %i.' % (step, e.returncode)
-            self.dump_log(self.step_log)
+            self.dump_log()
             sys.exit(1)
 
 
     def dump_log(self):
-        print 'Dumping last %i lines of log: %s' %  (self.step_log, self.DUMP_LOG_LINES)
-        self.run_cmd('tail', '-n', self.DUMP_LOG_LINES, self.step_log)
+        print 'Dumping last %i lines of log: %s\n\n' %  (self.DUMP_LOG_LINES, self.step_log)
+        print self.run_cmd('tail', '-n', '%i' % self.DUMP_LOG_LINES, self.step_log)
 
 
     def provision(self):
