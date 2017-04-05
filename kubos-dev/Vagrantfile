@@ -30,7 +30,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Misc devices
     ['0x15ba', '0x0031', 'Olimex JTAG tiny'],
     #STM Devices
-    ['0x0483', '0x3748', 'STM32 STLink'],
     ['0x0483', '0x374b', 'STM32 STLink'],
     ['0x0483', '0xdf11', 'STM32 BOOTLOADER'],
     #iOBC Devices
