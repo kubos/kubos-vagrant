@@ -130,7 +130,7 @@ class BoxUploader(BoxAutomator):
     def release_version(self):
         if self.resume:
             if self.check_status('release_version'):
-                print 'Version Previously Released... Skipping...'
+                print 'Version previously released... Skipping...'
         print 'Releasing Version: %s' % self.version
         release_url = '%s/version/%s/release' % (self.BASE_URL, self.version)
         headers = {

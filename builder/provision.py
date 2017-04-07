@@ -42,6 +42,7 @@ class BoxProvisioner(BoxAutomator):
         print 'Updating the base box'
         self.run_cmd('vagrant', 'box', 'update', '--box', 'kubostech/base', '--provider', 'virtualbox')
 
+
     def clone_vagrant_repo(self):
         if not os.path.isfile(self.VERSION_GIT_DIR):
             self.clone_repo(self.VERSION_DIR, self.VAGRANT_REPO_URL)
