@@ -16,10 +16,10 @@
 
 import argparse
 
-from utils import clean_build
+from utils     import clean_build
 from provision import provision_box
 from package   import package_box
-from uploader  import upload_box
+from upload    import upload_box
 
 def build_box(args):
     if args.clean:
@@ -45,6 +45,13 @@ def main():
     parser.add_argument('version',
                         nargs=1,
                         help='Specify the version of the upload.')
+
+
+    resume_parser = parser.add_mutually_exclusive_group(required=False)
+    resume_parser.add_argument('--resume', dest='resume', action='store_true')
+    resume_parser.add_argument('--no-resume', dest='resume', action='store_false')
+    parser.set_defaults(resume=True)
+
 
     parser.add_argument('-a', '--all',
                         action='store_true',

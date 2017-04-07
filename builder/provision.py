@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os
 import subprocess
 import sys
@@ -20,35 +21,61 @@ import vagrant
 from utils import BoxAutomator
 
 class BoxProvisioner(BoxAutomator):
-    provision_steps = {
+    STATUS_KEY = 'provision'
+    VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
+    DUMP_LOG_LINES = 50 #Number of lines to dump from end of logs on an error
+    status_steps = {
                         'base' :      ['privileged',
                                        'pre-package'],
                         'kubos-dev' : ['privileged',
-                                       'non-priveleged',
+                                       'non-privileged',
                                        'test',
                                        'pre-package']
                       }
 
-    def __init__(self, name, version):
-        super(BoxProvisioner, self).__init__(name, version)
+    def __init__(self, args):
+        super(BoxProvisioner, self).__init__(args)
+        if self.name == 'kubos-dev':
+            self.update_base_box()
+
+    def update_base_box(self):
+        print 'Updating the base box'
+        self.run_cmd('vagrant', 'box', 'update', '--box', 'kubostech/base', '--provider', 'virtualbox')
 
 
     def clone_vagrant_repo(self):
         if not os.path.isfile(self.VERSION_GIT_DIR):
             self.clone_repo(self.VERSION_DIR, self.VAGRANT_REPO_URL)
+        self.post_clone_setup()
+        self.setup_status()
 
 
     def run_provision_step(self, step, **kwargs):
+        if self.resume:
+            res = self.check_status(step)
+            if res == True:
+                print "Step %s already performed.. Skipping.." % step
+                return
+            if res == None:
+                self.setup_status_file()
+                self.run_provision_step(step)
         self.check_log_dir()
-        self.step_log = os.path.join(self.LOG_DIR, step)
-        log_cm = vagrant.make_file_cm(self.step_log + '-' + 'output.log')
-        print 'Logging to file: %s' % self.step_log + '-' + 'output.log'
+        self.step_log = os.path.join(self.LOG_DIR, step + '-' + 'output.log')
+        log_cm = vagrant.make_file_cm(self.step_log)
+        print 'Logging to file: %s' % self.step_log
         v = vagrant.Vagrant(out_cm=log_cm, err_cm=log_cm)
         try:
             v.up(provision_with=[step], **kwargs)
+            self.update_status(step)
         except subprocess.CalledProcessError as e:
-            print>>sys.stderr, 'Error: The provision step %s failed with error code %i.\nSee the provision log for details: %s' % (step, e.returncode, self.step_log)
+            print>>sys.stderr, 'Error: The provision step %s failed with error code %i.' % (step, e.returncode)
+            self.dump_log()
             sys.exit(1)
+
+
+    def dump_log(self):
+        print 'Dumping last %i lines of log: %s\n\n' %  (self.DUMP_LOG_LINES, self.step_log)
+        print self.run_cmd('tail', '-n', '%i' % self.DUMP_LOG_LINES, self.step_log)
 
 
     def provision(self):
@@ -57,7 +84,8 @@ class BoxProvisioner(BoxAutomator):
             print >>sys.stderr, "The requested box directory: %s does not exist" % self.box_dir
             sys.exit(1)
         os.chdir(self.box_dir)
-        steps = self.provision_steps[self.name]
+        self.post_clone_setup()
+        steps = self.status_steps[self.name]
         for step in steps:
             self.run_provision_step(step)
 
@@ -75,7 +103,7 @@ class BoxProvisioner(BoxAutomator):
 
 
 def provision_box(args):
-    provisioner = BoxProvisioner(args.box_name, args.version)
+    provisioner = BoxProvisioner(args)
     if not args.provision_no_clone:
         provisioner.clone_vagrant_repo()
     provisioner.provision()

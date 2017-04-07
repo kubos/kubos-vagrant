@@ -6,10 +6,10 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "kubostech/base"
-  config.vm.provision "shell", path: "./script/privileged-provision.sh"
-  config.vm.provision "shell", path: "./script/non-privileged-provision.sh", privileged: false
-  config.vm.provision "test",        type: "shell", path: "./script/provision-test.sh"
-  config.vm.provision "pre-package", type: "shell", path: "./script/pre-package.sh"
+  config.vm.provision "privileged",    type: "shell", path: "./script/privileged-provision.sh"
+  config.vm.provision "non-privilege", type: "shell", path: "./script/non-privileged-provision.sh", privileged: false
+  config.vm.provision "test",          type: "shell", path: "./script/provision-test.sh"
+  config.vm.provision "pre-package",   type: "shell", path: "./script/pre-package.sh"
   config.vm.synced_folder ".", "/vagrant"
 
   #To mount a specific directory into your box uncomment the next line and change the following paths to match your host directory and a desired mount point in the box.
