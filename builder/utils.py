@@ -160,7 +160,7 @@ class BoxAutomator(object):
     '''
 
     def mkdir(self, path):
-        print 'maiking directory: %s' % path
+        print 'making directory: %s' % path
         if not os.path.isdir(path):
             os.makedirs(path)
 

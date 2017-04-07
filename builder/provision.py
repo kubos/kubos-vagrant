@@ -28,7 +28,7 @@ class BoxProvisioner(BoxAutomator):
                         'base' :      ['privileged',
                                        'pre-package'],
                         'kubos-dev' : ['privileged',
-                                       'non-priveleged',
+                                       'non-privileged',
                                        'test',
                                        'pre-package']
                       }
@@ -57,7 +57,7 @@ class BoxProvisioner(BoxAutomator):
                 return
             if res == None:
                 self.setup_status_file()
-                return self.run_provision_step(step)
+                self.run_provision_step(step)
         self.check_log_dir()
         self.step_log = os.path.join(self.LOG_DIR, step + '-' + 'output.log')
         log_cm = vagrant.make_file_cm(self.step_log)

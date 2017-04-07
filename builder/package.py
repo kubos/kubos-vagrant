@@ -15,6 +15,8 @@
 
 import vagrant
 import subprocess
+import sys
+
 from utils import BoxAutomator
 
 class BoxPackager(BoxAutomator):
@@ -30,15 +32,23 @@ class BoxPackager(BoxAutomator):
 
 
     def package(self, args):
+        if self.resume:
+            res = self.check_status(self.STATUS_KEY)
+            if res == True:
+                print "Step %s already performed.. Skipping.." % self.STATUS_KEY
+                return
+            if res == None:
+                self.setup_status_file()
+                self.run_provision_step(step)
         self.validate_path(args.box)
         if self.check_status('package'):
-            print 'Box has previuosly been packaged. Skipping the packaging step..'
+            print 'Box has previously been packaged. Skipping the packaging step..'
             return
         print 'Starting Box Packaging Process...'
         v = vagrant.Vagrant()
         try:
             v.package()
-            self.update_status('package')
+            self.update_status(self.STATUS_KEY)
             print 'Packaging completed successfully...'
 
         except subprocess.CalledProcessError as e:
