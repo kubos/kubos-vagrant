@@ -33,9 +33,9 @@ class BoxPackager(BoxAutomator):
 
     def package(self, args):
         if self.resume:
-            res = self.check_status(self.STATUS_KEY)
+            res = self.check_status('package')
             if res == True:
-                print "Step %s already performed.. Skipping.." % self.STATUS_KEY
+                print "The packaging step already performed.. Skipping.."
                 return
             if res == None:
                 self.setup_status_file()
