@@ -48,8 +48,8 @@ def main():
 
 
     resume_parser = parser.add_mutually_exclusive_group(required=False)
-    resume_parser.add_argument('--feature', dest='resume', action='store_true')
-    resume_parser.add_argument('--no-feature', dest='resume', action='store_false')
+    resume_parser.add_argument('--resume', dest='resume', action='store_true')
+    resume_parser.add_argument('--no-resume', dest='resume', action='store_false')
     parser.set_defaults(resume=True)
 
 
