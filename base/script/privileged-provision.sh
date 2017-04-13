@@ -32,6 +32,10 @@ unzip libmsp430.so.zip
 mv libmsp430.so /usr/lib
 rm -rf libmsp430.so.zip libmsp430.so
 
+#doxygen tools
+apt-get install -y doxygen
+apt-get install -y graphviz mscgen
+
 #do the pip setup and installation things
 easy_install pip
 pip install --upgrade pip
