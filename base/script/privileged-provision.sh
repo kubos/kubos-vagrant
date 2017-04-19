@@ -27,10 +27,8 @@ apt-get install -y openocd
 apt-get install -y linux-image-extra-virtual
 
 #libmsp430.so is mounted from the bin/ directory
-apt-get install unzip
-unzip libmsp430.so.zip
-mv libmsp430.so /usr/lib
-rm -rf libmsp430.so.zip libmsp430.so
+mv /home/vagrant/libmsp430.so /usr/lib
+rm -rf libmsp430.so
 
 #do the pip setup and installation things
 easy_install pip
