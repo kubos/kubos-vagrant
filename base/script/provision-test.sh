@@ -7,9 +7,11 @@ green='\E[32m'
 
 return_code=0
 
+#Programs to ensure are installed and in the PATH
 programs=(
     arm-none-eabi-gcc
     arm-none-eabi-gdb
+    arm-linux-gcc
     cmake
     dfu-util
     lsusb
@@ -20,7 +22,15 @@ programs=(
     openocd
 )
 
-test_installed () {
+#List of file paths to test for existence
+files=(
+    /usr/lib/libmsp430.so
+    /etc/udev/rules.d/ftdi-usb.rules
+    /etc/udev/rules.d/stm.rules
+    /etc/minicom/minirc.kubos
+)
+
+test_programs_installed () {
     if command -v $1 > /dev/null
     then
         printf "$green$1 => found\n"
@@ -31,9 +41,28 @@ test_installed () {
     tput sgr0 #reset to normal text output
 }
 
+
+test_files_exist() {
+    if test -e $1
+    then
+        printf "$green$1 => found\n"
+    else
+        printf "$red$1 => not found\n" >&2
+        return_code=1
+    fi
+}
+
+
+#Test for programs
 for prog in "${programs[@]}"
 do
-    test_installed $prog
+    test_programs_installed $prog
+done
+
+#Test for files
+for file in "${files[@]}"
+do
+    test_files_exist $file
 done
 
 exit $return_code
