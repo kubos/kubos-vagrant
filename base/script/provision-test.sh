@@ -22,6 +22,7 @@ programs=(
     openocd
 )
 
+#List of file paths to test for existence
 files=(
     /usr/lib/libmsp430.so
     /etc/udev/rules.d/ftdi-usb.rules

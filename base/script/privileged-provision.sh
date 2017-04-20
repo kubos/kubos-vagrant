@@ -28,7 +28,6 @@ apt-get install -y linux-image-extra-virtual
 
 #libmsp430.so is mounted from the bin/ directory
 mv /home/vagrant/libmsp430.so /usr/lib
-rm -rf libmsp430.so
 
 #do the pip setup and installation things
 easy_install pip
