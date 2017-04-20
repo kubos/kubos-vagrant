@@ -53,13 +53,13 @@ test_files_exist() {
 }
 
 
-#test for programs
+#Test for programs
 for prog in "${programs[@]}"
 do
     test_programs_installed $prog
 done
 
-#test for files
+#Test for files
 for file in "${files[@]}"
 do
     test_files_exist $file
