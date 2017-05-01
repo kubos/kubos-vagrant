@@ -7,4 +7,6 @@ mkdir -p /home/vagrant/.kubos
 chown -R vagrant /home/vagrant/.kubos
 chown -R vagrant /usr/local/lib/
 
+activate-global-python-argcomplete
+
 echo "Finished root provisioning"
