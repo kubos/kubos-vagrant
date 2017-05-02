@@ -1,0 +1,9 @@
+# Rule for FTDI USB connections (ex. iOBC and STM32 UART connections)
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="FTDI"
+
+# Rules for STM USB device (used for device firmware updates)
+ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE="666", GROUP="plugdev"
+ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE="666", GROUP="plugdev"
+
+# Rule for MSP430F5529 debug USB/UART connection (not DFUs)
+SUBSYSTEMS=="usb", KERNEL=="ttyACM*", ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0013", SYMLINK+="MSP430"

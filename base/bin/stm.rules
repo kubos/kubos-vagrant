@@ -1,2 +1,0 @@
-ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE="666", GROUP="plugdev"
-ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE="666", GROUP="plugdev"

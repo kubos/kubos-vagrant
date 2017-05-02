@@ -43,8 +43,8 @@ wget http://portal.kubos.co/bin/iobc_toolchain.tar.gz
 tar -xf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/iobc_toolchain.tar.gz
 mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
-mv /home/vagrant/ftdi-usb.rules /etc/udev/rules.d/ftdi-usb.rules
-mv /home/vagrant/stm.rules /etc/udev/rules.d/stm.rules
+mv /home/vagrant/minirc.msp430 /etc/minicom/minirc.msp430
+mv /home/vagrant/kubos-usb.rules /etc/udev/rules.d/kubos-usb.rules
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 adduser vagrant dialout
 
