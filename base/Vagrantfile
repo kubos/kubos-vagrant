@@ -9,9 +9,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "./bin/libmsp430.so", destination: "~/libmsp430.so"
   config.vm.provision "file", source: "./bin/minirc.kubos", destination: "~/minirc.kubos"
   config.vm.provision "file", source: "./bin/ftdi-usb.rules", destination: "~/ftdi-usb.rules"
-  config.vm.provision "file", source: "./bin/stm.rules", destination: "~/stm-disco.rules"
+  config.vm.provision "file", source: "./bin/stm.rules", destination: "~/stm.rules"
   config.vm.provision "privileged",  type: "shell", path: "./script/privileged-provision.sh"
   config.vm.provision "pre-package", type: "shell", path: "./script/pre-package.sh"
+  config.vm.provision "test", type: "shell", path: "./script/provision-test.sh"
   config.vm.synced_folder ".", "/vagrant"
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 2048

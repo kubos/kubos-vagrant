@@ -27,10 +27,7 @@ apt-get install -y openocd
 apt-get install -y linux-image-extra-virtual
 
 #libmsp430.so is mounted from the bin/ directory
-apt-get install unzip
-unzip libmsp430.so.zip
-mv libmsp430.so /usr/lib
-rm -rf libmsp430.so.zip libmsp430.so
+mv /home/vagrant/libmsp430.so /usr/lib
 
 #doxygen tools
 apt-get install -y doxygen
@@ -51,7 +48,7 @@ tar -xf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/iobc_toolchain.tar.gz
 mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
 mv /home/vagrant/ftdi-usb.rules /etc/udev/rules.d/ftdi-usb.rules
-mv /home/vagrant/stm-disco.rules /etc/udev/rules.d/stm-disco.rules
+mv /home/vagrant/stm.rules /etc/udev/rules.d/stm.rules
 echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 adduser vagrant dialout
 
