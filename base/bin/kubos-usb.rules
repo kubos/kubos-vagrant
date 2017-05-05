@@ -5,5 +5,8 @@ SUBSYSTEMS=="usb", KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=
 ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE="666", GROUP="plugdev"
 ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", MODE="666", GROUP="plugdev"
 
-# Rule for MSP430F5529 debug USB/UART connection (not DFUs)
-SUBSYSTEMS=="usb", KERNEL=="ttyACM*", ATTRS{idVendor}=="2047", ATTRS{idProduct}=="0013", SYMLINK+="MSP430"
+# Rule for MSP430F5529 programming and console connections
+# Note: You cannot have both ATTRS{idVendor} and ATTRS{interface} because of udev's 'one parent' rule
+# and we need ATTRS{interface} to be able to distinguish between this single USB's two interfaces
+SUBSYSTEMS=="usb", KERNEL=="ttyACM*", ATTRS{interface}=="MSP Application UART", MODE="666", SYMLINK+="MSP430-console"
+SUBSYSTEMS=="usb", KERNEL=="ttyACM*", ATTRS{interface}=="MSP Debug Interface", MODE="666", SYMLINK+="MSP430-program"
