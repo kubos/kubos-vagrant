@@ -25,9 +25,9 @@ programs=(
 #List of file paths to test for existence
 files=(
     /usr/lib/libmsp430.so
-    /etc/udev/rules.d/ftdi-usb.rules
-    /etc/udev/rules.d/stm.rules
+    /etc/udev/rules.d/kubos-usb.rules
     /etc/minicom/minirc.kubos
+    /etc/minicom/minirc.msp430
 )
 
 test_programs_installed () {
