@@ -1,5 +1,7 @@
 kubos update --latest || true #Can't run as root or else yotta symlinks are created to /root/.kubos/...
 
-echo "source /etc/bash_completion.d/python-argcomplete.sh" >> /home/vagerant/.bashrc
+kubos update --tab-completion
+
+echo "source /home/vagrant/.kubos/completion/kubos_completion" >> /home/vagerant/.bashrc
 
 echo "Finishing provisioning..."
