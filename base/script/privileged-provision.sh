@@ -29,13 +29,16 @@ apt-get install -y linux-image-extra-virtual
 #libmsp430.so is mounted from the bin/ directory
 mv /home/vagrant/libmsp430.so /usr/lib
 
-#doxygen tools
-apt-get install -y doxygen
-apt-get install -y graphviz mscgen
-
 #do the pip setup and installation things
 easy_install pip
 pip install --upgrade pip
+
+
+#documentation tools
+apt-get install -y doxygen graphviz plantuml
+pip install breathe
+pip install sphinx-rtd-theme
+pip install sphinxcontrib-plantuml
 
 #KubOS Linux setup
 echo "Installing KubOS Linux Toolchain"
