@@ -2,6 +2,6 @@ kubos update --latest || true #Can't run as root or else yotta symlinks are crea
 
 kubos update --tab-completion
 
-echo "source /home/vagrant/.kubos/completion/kubos_completion" >> /home/vagerant/.bashrc
+echo "source /home/vagrant/.kubos/completion/kubos_completion" >> /home/vagrant/.bashrc
 
 echo "Finishing provisioning..."
