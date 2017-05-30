@@ -18,3 +18,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.memory = 2048
   end
 end
+

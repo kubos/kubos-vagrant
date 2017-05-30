@@ -33,6 +33,15 @@ mv /home/vagrant/libmsp430.so /usr/lib
 easy_install pip
 pip install --upgrade pip
 
+
+#documentation tools
+apt-get install -y doxygen graphviz plantuml
+pip install Sphinx==1.5.6
+pip install breathe
+pip install sphinx-rtd-theme
+pip install sphinxcontrib-plantuml
+pip install sphinx-jsondomain
+
 #KubOS Linux setup
 echo "Installing KubOS Linux Toolchain"
 
