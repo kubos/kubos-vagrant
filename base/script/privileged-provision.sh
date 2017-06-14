@@ -38,7 +38,7 @@ pip install --upgrade pip
 apt-get install -y doxygen graphviz plantuml
 pip install Sphinx==1.5.6
 pip install breathe
-pip install sphinx-rtd-theme
+pip install sphinx-rtd-theme==0.2.4
 pip install sphinxcontrib-plantuml
 pip install sphinx-jsondomain
 
