@@ -25,7 +25,9 @@ class BoxProvisioner(BoxAutomator):
     VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
     DUMP_LOG_LINES = 50 #Number of lines to dump from end of logs on an error
     status_steps = {
-                        'base' :      ['privileged',
+                        'base' :      ['file',
+                                       'privileged',
+                                       'test',
                                        'pre-package'],
                         'kubos-dev' : ['privileged',
                                        'non-privileged',
