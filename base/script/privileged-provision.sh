@@ -43,18 +43,26 @@ pip install sphinxcontrib-plantuml
 pip install sphinx-jsondomain
 
 #KubOS Linux setup
-echo "Installing KubOS Linux Toolchain"
+echo "Installing KubOS Linux Toolchains"
 
 apt-get install -y minicom
 apt-get install -y libc6-i386 lib32stdc++6 lib32z1
 
+#iOBC Toolchain
 wget http://portal.kubos.co/bin/iobc_toolchain.tar.gz
 tar -xf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/iobc_toolchain.tar.gz
+
+#Beaglebone Black/Pumpkin MBM2 toolchain
+wget http://portal.kubos.co/bin/bbb_toolchain.tar.gz
+tar -xf /home/vagrant/bbb_toolchain.tar.gz -C /usr/bin
+rm /home/vagrant/bbb_toolchain.tar.gz
+
+
 mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
 mv /home/vagrant/minirc.msp430 /etc/minicom/minirc.msp430
 mv /home/vagrant/kubos-usb.rules /etc/udev/rules.d/kubos-usb.rules
-echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
+
 adduser vagrant dialout
 
 #Vagrant commands may act funny without password-less sudo
