@@ -61,6 +61,9 @@ wget http://portal.kubos.co/bin/bbb_toolchain.tar.gz
 tar -xf /home/vagrant/bbb_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/bbb_toolchain.tar.gz
 
+#Legacy Beaglebone Black toolchain
+apt-get install crossbuild-essential-armhf gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+
 mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
 mv /home/vagrant/minirc.msp430 /etc/minicom/minirc.msp430
 mv /home/vagrant/kubos-usb.rules /etc/udev/rules.d/kubos-usb.rules
