@@ -17,7 +17,7 @@ apt-get install -y gcc-arm-embedded
 apt-get install -y git
 apt-get install -y cmake
 apt-get install -y gcc-msp430 gdb-msp430 msp430-libc
-apt-get install -y libdbus1-dev
+apt-get install -y libdbus-1-dev
 
 # flash tools
 apt-get install -y mspdebug
