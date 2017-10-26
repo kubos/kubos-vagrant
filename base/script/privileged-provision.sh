@@ -52,12 +52,12 @@ apt-get install -y libc6-i386 lib32stdc++6 lib32z1
 apt-get install -y unzip mtools
 
 #iOBC Toolchain
-wget http://portal.kubos.co/bin/iobc_toolchain.tar.gz
+wget https://s3.amazonaws.com/kubos-provisioning/iobc_toolchain.tar.gz
 tar -xf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/iobc_toolchain.tar.gz
 
 #Beaglebone Black/Pumpkin MBM2 toolchain
-wget http://portal.kubos.co/bin/bbb_toolchain.tar.gz
+wget https://s3.amazonaws.com/kubos-provisioning/bbb_toolchain.tar.gz
 tar -xf /home/vagrant/bbb_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/bbb_toolchain.tar.gz
 
