@@ -7,7 +7,6 @@ apt-get install -y software-properties-common
 add-apt-repository -y ppa:team-gcc-arm-embedded/ppa
 add-apt-repository -y ppa:george-edison55/cmake-3.x
 add-apt-repository -y ppa:git-core/ppa
-add-apt-repository -y ppa:fkrull/deadsnakes-python2.7
 apt-get update
 
 apt-get upgrade -y python2.7 ncurses-dev bc
@@ -17,7 +16,7 @@ apt-get install -y gcc-arm-embedded
 apt-get install -y git
 apt-get install -y cmake
 apt-get install -y gcc-msp430 gdb-msp430 msp430-libc
-apt-get install -y libdbus-1-dev
+apt-get install -y libdbus-1-dev dbus
 
 # flash tools
 apt-get install -y mspdebug
@@ -53,17 +52,17 @@ apt-get install -y libc6-i386 lib32stdc++6 lib32z1
 apt-get install -y unzip mtools
 
 #iOBC Toolchain
-wget http://portal.kubos.co/bin/iobc_toolchain.tar.gz
+wget https://s3.amazonaws.com/kubos-provisioning/iobc_toolchain.tar.gz
 tar -xf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/iobc_toolchain.tar.gz
 
 #Beaglebone Black/Pumpkin MBM2 toolchain
-wget http://portal.kubos.co/bin/bbb_toolchain.tar.gz
+wget https://s3.amazonaws.com/kubos-provisioning/bbb_toolchain.tar.gz
 tar -xf /home/vagrant/bbb_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/bbb_toolchain.tar.gz
 
 #Legacy Beaglebone Black toolchain
-apt-get install crossbuild-essential-armhf gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+apt-get install -y crossbuild-essential-armhf gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
 
 mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
 mv /home/vagrant/minirc.msp430 /etc/minicom/minirc.msp430

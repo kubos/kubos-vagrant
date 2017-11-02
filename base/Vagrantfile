@@ -10,6 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "./bin/minirc.kubos", destination: "~/minirc.kubos"
   config.vm.provision "file", source: "./bin/minirc.msp430", destination: "~/minirc.msp430"
   config.vm.provision "file", source: "./bin/kubos-usb.rules", destination: "~/kubos-usb.rules"
+  config.vm.provision "file", source: "./bin/kubos.conf", destination: "~/kubos-dbus.conf"
+  config.vm.provision "file", source: "./bin/dbus_setup.sh", destination: "~/dbus_setup.sh"
   config.vm.provision "privileged",  type: "shell", path: "./script/privileged-provision.sh"
   config.vm.provision "pre-package", type: "shell", path: "./script/pre-package.sh"
   config.vm.provision "test", type: "shell", path: "./script/provision-test.sh"
@@ -18,4 +20,3 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.memory = 2048
   end
 end
-
