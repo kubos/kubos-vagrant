@@ -67,6 +67,8 @@ apt-get install -y crossbuild-essential-armhf gcc-arm-linux-gnueabihf g++-arm-li
 mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
 mv /home/vagrant/minirc.msp430 /etc/minicom/minirc.msp430
 mv /home/vagrant/kubos-usb.rules /etc/udev/rules.d/kubos-usb.rules
+mv /home/vagrant/kubos-dbus.conf /etc/dbus-1/kubos-dbus.conf
+mv /home/vagrant/dbus_setup.sh /etc/dbus-1/dbus_setup.sh
 
 adduser vagrant dialout
 
