@@ -6,7 +6,6 @@ apt-get install -y software-properties-common
 
 add-apt-repository -y ppa:team-gcc-arm-embedded/ppa
 add-apt-repository -y ppa:george-edison55/cmake-3.x
-add-apt-repository -y ppa:git-core/ppa
 apt-get update
 
 apt-get upgrade -y python2.7 ncurses-dev bc
