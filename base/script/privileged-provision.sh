@@ -6,8 +6,6 @@ apt-get install -y software-properties-common
 
 add-apt-repository -y ppa:team-gcc-arm-embedded/ppa
 add-apt-repository -y ppa:george-edison55/cmake-3.x
-add-apt-repository -y ppa:git-core/ppa
-add-apt-repository -y ppa:fkrull/deadsnakes-python2.7
 apt-get update
 
 apt-get upgrade -y python2.7 ncurses-dev bc
@@ -17,7 +15,7 @@ apt-get install -y gcc-arm-embedded
 apt-get install -y git
 apt-get install -y cmake
 apt-get install -y gcc-msp430 gdb-msp430 msp430-libc
-apt-get install -y libdbus-1-dev
+apt-get install -y libdbus-1-dev dbus
 
 # flash tools
 apt-get install -y mspdebug
@@ -63,11 +61,13 @@ tar -xf /home/vagrant/bbb_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/bbb_toolchain.tar.gz
 
 #Legacy Beaglebone Black toolchain
-apt-get install crossbuild-essential-armhf gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+apt-get install -y crossbuild-essential-armhf gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf
 
 mv /home/vagrant/minirc.kubos /etc/minicom/minirc.kubos
 mv /home/vagrant/minirc.msp430 /etc/minicom/minirc.msp430
 mv /home/vagrant/kubos-usb.rules /etc/udev/rules.d/kubos-usb.rules
+mv /home/vagrant/kubos-dbus.conf /etc/dbus-1/kubos-dbus.conf
+mv /home/vagrant/dbus_setup.sh /etc/dbus-1/dbus_setup.sh
 
 adduser vagrant dialout
 

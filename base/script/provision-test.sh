@@ -11,7 +11,8 @@ return_code=0
 programs=(
     arm-none-eabi-gcc
     arm-none-eabi-gdb
-    arm-linux-gcc
+    /usr/bin/iobc_toolchain/usr/bin/arm-linux-gcc
+    /usr/bin/bbb_toolchain/usr/bin/arm-linux-gcc
     cmake
     dfu-util
     lsusb
