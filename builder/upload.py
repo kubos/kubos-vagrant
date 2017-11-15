@@ -52,7 +52,7 @@ class BoxUploader(BoxAutomator):
 
     def __init__(self, args):
         super(BoxUploader, self).__init__(args)
-        self.BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (self.USER_NAME, self.name)
+        self.BASE_URL = 'https://app.vagrantup.com/api/v1/box/%s/%s' % (self.USER_NAME, self.name)
         self.ACCESS_TOKEN = os.environ['VAGRANT_CLOUD_ACCESS_TOKEN']
         self.setup_status()
 
