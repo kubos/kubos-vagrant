@@ -38,7 +38,10 @@ class BoxProvisioner(BoxAutomator):
     def __init__(self, args):
         super(BoxProvisioner, self).__init__(args)
         if self.name == 'kubos-dev':
+            # Pull the latest base box if there's a new one available
+            # Vagrant doesn't allow tagging local boxes with version #'s
             self.update_base_box()
+
 
     def update_base_box(self):
         print 'Updating the base box'
@@ -106,7 +109,10 @@ class BoxProvisioner(BoxAutomator):
 
 def provision_box(args):
     provisioner = BoxProvisioner(args)
-    if not args.provision_no_clone:
+    if args.local:
+        provisioner.copy_box_directory(args.box_name)
+        provisioner.setup_status()
+    else:
         provisioner.clone_vagrant_repo()
     provisioner.provision()
     print 'Provisioning successfully completed...'

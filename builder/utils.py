@@ -61,12 +61,12 @@ class BoxAutomator(object):
         return None
 
 
-    def check_status(self, step):
+    def check_status(self, status_step):
         data = self.load_status(self.STATUS_FILE)
         if data == None:
             return None
-        if step in data[self.name][self.STATUS_KEY]:
-            return data[self.name][self.STATUS_KEY][step]
+        if status_step in data[self.name][self.STATUS_KEY]:
+            return data[self.name][self.STATUS_KEY][status_step]
         else:
             return None
 
@@ -202,6 +202,15 @@ class BoxAutomator(object):
             print 'Cleaning existing build directory %s' % self.VERSION_DIR
             shutil.rmtree(self.VERSION_DIR)
             self.setup_dirs()
+
+
+    def copy_box_directory(self, box_name):
+        dest_dir = os.path.join(self.VERSION_DIR, box_name)
+        source_dir = os.path.abspath(os.path.join(__file__, '..', '..', box_name))
+        if os.path.isdir(dest_dir):
+            print 'Destination directory %s already exists... Skipping copy' % dest_dir
+        else:
+            shutil.copytree(source_dir, dest_dir)
 
 
 def clean_build(args):

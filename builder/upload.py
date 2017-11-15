@@ -167,10 +167,10 @@ def upload_box(args):
     errors_key  = 'errors'
 
     uploader.validate_box_path(args)
-    if args.all or not args.upload_no_create_version:
-        create_version_response = uploader.create_version()
-    if args.all or not args.upload_no_create_provider:
-        create_provider_response = uploader.create_provider()
+    #create the new version
+    create_version_response = uploader.create_version()
+    #add the Virtuaox provider
+    create_provider_response = uploader.create_provider()
 
     status_response = uploader.get_upload_status()
     status_data = status_response.json()
@@ -182,10 +182,10 @@ def upload_box(args):
     upload_url   = status_data['upload_path']
     upload_token = status_data['token']
 
-    if args.all or not args.upload_no_box_upload:
-        uploader.submit_upload(upload_url)
+    # upload the box file
+    uploader.submit_upload(upload_url)
 
-    if args.all or not args.upload_no_release:
+    if not args.halt_release:
         release_response = uploader.release_version()
         verification_response = uploader.get_version_status()
         hosted_token = verification_response.json()['hosted_token']
