@@ -91,7 +91,7 @@ def main():
                         help='Specify a non-default Vagrant box directory (points to a Vagrantfile or the directory containing the Vagrant file)')
 
     args, following_args = parser.parse_known_args()
-    args.version = args.version[0] #version is initially a list of 1 element
+    args.version = args.version[0] # Version is initially a list of 1 element
     args.box_name = args.box_name[0]
     if args.box_name == 'all':
         args.box_name = 'base'

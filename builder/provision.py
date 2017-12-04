@@ -23,7 +23,7 @@ from utils import BoxAutomator
 class BoxProvisioner(BoxAutomator):
     STATUS_KEY = 'provision'
     VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
-    DUMP_LOG_LINES = 50 #Number of lines to dump from end of logs on an error
+    DUMP_LOG_LINES = 50 # Number of lines to dump from end of logs on an error
     status_steps = {
                         'base' :      ['file',
                                        'privileged',

@@ -119,7 +119,7 @@ class BoxUploader(BoxAutomator):
             if self.check_status('submit_upload'):
                 print 'Box previously uploaded... Skipping...'
         print 'Uploading box file %s' % self.path
-        #The requests mulitpart file upload is being rejected by the Vagrant API - Just using a curl shell command for now
+        # The requests mulitpart file upload is being rejected by the Vagrant API - Just using a curl shell command for now
         # upload_file = {'file': open(path)}
         # res = requests.put(upload_url, files=upload_file)
         # return res
@@ -154,7 +154,7 @@ def upload_box(args):
     The REST API upload workflow is:
 
     1) Create a new version of the box
-    2) Create a virtualbox provider for the new version
+    2) Create a VirtualBox provider for the new version
     3) Get our upload endpoint and upload token
     4) Upload the *.box file
     5) Release the version
@@ -167,9 +167,9 @@ def upload_box(args):
     errors_key  = 'errors'
 
     uploader.validate_box_path(args)
-    #create the new version
+    # Create the new version
     create_version_response = uploader.create_version()
-    #add the Virtuaox provider
+    # Add the VirtualBox provider
     create_provider_response = uploader.create_provider()
 
     status_response = uploader.get_upload_status()
@@ -182,7 +182,7 @@ def upload_box(args):
     upload_url   = status_data['upload_path']
     upload_token = status_data['token']
 
-    # upload the box file
+    # Upload the box file
     uploader.submit_upload(upload_url)
 
     if not args.halt_release:
