@@ -23,7 +23,7 @@ from utils import BoxAutomator
 class BoxProvisioner(BoxAutomator):
     STATUS_KEY = 'provision'
     VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
-    DUMP_LOG_LINES = 50 #Number of lines to dump from end of logs on an error
+    DUMP_LOG_LINES = 50 # Number of lines to dump from end of logs on an error
     status_steps = {
                         'base' :      ['file',
                                        'privileged',
@@ -38,7 +38,10 @@ class BoxProvisioner(BoxAutomator):
     def __init__(self, args):
         super(BoxProvisioner, self).__init__(args)
         if self.name == 'kubos-dev':
+            # Pull the latest base box if there's a new one available
+            # Vagrant doesn't allow tagging local boxes with version #'s
             self.update_base_box()
+
 
     def update_base_box(self):
         print 'Updating the base box'
@@ -106,7 +109,10 @@ class BoxProvisioner(BoxAutomator):
 
 def provision_box(args):
     provisioner = BoxProvisioner(args)
-    if not args.provision_no_clone:
+    if args.local:
+        provisioner.copy_box_directory(args.box_name)
+        provisioner.setup_status()
+    else:
         provisioner.clone_vagrant_repo()
     provisioner.provision()
     print 'Provisioning successfully completed...'

@@ -52,7 +52,7 @@ class BoxUploader(BoxAutomator):
 
     def __init__(self, args):
         super(BoxUploader, self).__init__(args)
-        self.BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (self.USER_NAME, self.name)
+        self.BASE_URL = 'https://app.vagrantup.com/api/v1/box/%s/%s' % (self.USER_NAME, self.name)
         self.ACCESS_TOKEN = os.environ['VAGRANT_CLOUD_ACCESS_TOKEN']
         self.setup_status()
 
@@ -119,7 +119,7 @@ class BoxUploader(BoxAutomator):
             if self.check_status('submit_upload'):
                 print 'Box previously uploaded... Skipping...'
         print 'Uploading box file %s' % self.path
-        #The requests mulitpart file upload is being rejected by the Vagrant API - Just using a curl shell command for now
+        # The requests mulitpart file upload is being rejected by the Vagrant API - Just using a curl shell command for now
         # upload_file = {'file': open(path)}
         # res = requests.put(upload_url, files=upload_file)
         # return res
@@ -154,7 +154,7 @@ def upload_box(args):
     The REST API upload workflow is:
 
     1) Create a new version of the box
-    2) Create a virtualbox provider for the new version
+    2) Create a VirtualBox provider for the new version
     3) Get our upload endpoint and upload token
     4) Upload the *.box file
     5) Release the version
@@ -167,10 +167,10 @@ def upload_box(args):
     errors_key  = 'errors'
 
     uploader.validate_box_path(args)
-    if args.all or not args.upload_no_create_version:
-        create_version_response = uploader.create_version()
-    if args.all or not args.upload_no_create_provider:
-        create_provider_response = uploader.create_provider()
+    # Create the new version
+    create_version_response = uploader.create_version()
+    # Add the VirtualBox provider
+    create_provider_response = uploader.create_provider()
 
     status_response = uploader.get_upload_status()
     status_data = status_response.json()
@@ -182,10 +182,10 @@ def upload_box(args):
     upload_url   = status_data['upload_path']
     upload_token = status_data['token']
 
-    if args.all or not args.upload_no_box_upload:
-        uploader.submit_upload(upload_url)
+    # Upload the box file
+    uploader.submit_upload(upload_url)
 
-    if args.all or not args.upload_no_release:
+    if not args.halt_release:
         release_response = uploader.release_version()
         verification_response = uploader.get_version_status()
         hosted_token = verification_response.json()['hosted_token']

@@ -61,18 +61,18 @@ class BoxAutomator(object):
         return None
 
 
-    def check_status(self, step):
+    def check_status(self, status_step):
         data = self.load_status(self.STATUS_FILE)
         if data == None:
             return None
-        if step in data[self.name][self.STATUS_KEY]:
-            return data[self.name][self.STATUS_KEY][step]
+        if status_step in data[self.name][self.STATUS_KEY]:
+            return data[self.name][self.STATUS_KEY][status_step]
         else:
             return None
 
 
     def save_status(self, status, path):
-        #status is a json encoded dict
+        # Status is a json encoded dict
         with open(path, 'w') as status_file:
             status_file.write(json.dumps(status))
 
@@ -84,7 +84,7 @@ class BoxAutomator(object):
                 data[self.name] = {}
                 self.save_status(data, self.STATUS_FILE)
         else:
-            #The status file doesn't exist. Create it and add the current box to it.
+            # The status file doesn't exist. Create it and add the current box to it.
             js_data = json.loads('{ "%s" : {} }' % self.name)
             self.save_status(js_data, self.STATUS_FILE)
 
@@ -106,7 +106,7 @@ class BoxAutomator(object):
 
 
     def update_status(self, step):
-        #updating the status upon completion of a step
+        # Updating the status upon completion of a step
         data = self.load_status(self.STATUS_FILE)
         data[self.name][self.STATUS_KEY][step] = True
         self.save_status(data, self.STATUS_FILE)
@@ -116,7 +116,7 @@ class BoxAutomator(object):
     '''
 
     def post_clone_setup(self):
-        #Because cloning requires an empty directory we have to make the log directory at a later time.
+        # Because cloning requires an empty directory we have to make the log directory at a later time.
         self.check_log_dir()
         self.setup_status_file()
 
@@ -169,7 +169,7 @@ class BoxAutomator(object):
         if not path:
             print 'Path was not provided. Using the default path...'
             self.path = os.path.join(os.getcwd(), self.name)
-        if os.path.isfile(self.path): #if it's pointing to a Vagrantfile - we want the directory name
+        if os.path.isfile(self.path): # If it's pointing to a Vagrantfile - we want the directory name
             self.path = os.path.dirname(self.path)
         if not self.VAGRANT_FILE in os.listdir(self.path):
             print >>sys.stderr, 'Error: %s is not a valid path to a Vagrantfile or to a valid box directory' % path
@@ -178,8 +178,8 @@ class BoxAutomator(object):
 
 
     def validate_box_path(self, args):
-        #validate_box_path is only called from the upload file - which requires a valid package.box file
-        #to be functional
+        # Validate_box_path is only called from the upload file - which requires a valid package.box file
+        # to be functional
         self.validate_path(args.box)
         self.box_path = os.path.join(self.path, self.BOX_FILE_NAME)
         if not os.path.isfile(self.box_path):
@@ -202,6 +202,15 @@ class BoxAutomator(object):
             print 'Cleaning existing build directory %s' % self.VERSION_DIR
             shutil.rmtree(self.VERSION_DIR)
             self.setup_dirs()
+
+
+    def copy_box_directory(self, box_name):
+        dest_dir = os.path.join(self.VERSION_DIR, box_name)
+        source_dir = os.path.abspath(os.path.join(__file__, '..', '..', box_name))
+        if os.path.isdir(dest_dir):
+            print 'Destination directory %s already exists... Skipping copy' % dest_dir
+        else:
+            shutil.copytree(source_dir, dest_dir)
 
 
 def clean_build(args):
