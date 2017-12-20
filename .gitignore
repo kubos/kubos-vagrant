@@ -1,3 +1,4 @@
 .vagrant/
 builder/builds/*
 *.pyc
+*.box
