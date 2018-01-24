@@ -5,7 +5,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "kubostech/base"
+  config.vm.box = "kubos/base"
   config.vm.provision "file", source: "./bin/cargo_config", destination: "~/.cargo/config"
   config.vm.provision "privileged",    type: "shell", path: "./script/privileged-provision.sh"
   config.vm.provision "non-privileged", type: "shell", path: "./script/non-privileged-provision.sh", privileged: false

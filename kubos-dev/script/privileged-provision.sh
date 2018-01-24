@@ -1,6 +1,5 @@
-pip install pysocks pyserial #Temporary - This will be added to the kubos-cli requirements.txt
-pip install git+https://github.com/kubostech/kubos-cli
-pip install cryptography==1.9
+pip install -r https://raw.githubusercontent.com/kubos/kubos-cli/master/requirements.txt
+pip install git+https://github.com/kubos/kubos-cli
 
 mkdir -p /usr/local/lib/yotta_modules
 mkdir -p /usr/local/lib/yotta_targets

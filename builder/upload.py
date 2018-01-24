@@ -29,7 +29,7 @@ class BoxUploader(BoxAutomator):
     BOX_NAME = 'kubos'
     CURL = 'curl'
     PROVIDER = 'virtualbox'
-    USER_NAME = 'kubostech'
+    USER_NAME = 'kubos'
     BASE_URL = 'https://atlas.hashicorp.com/api/v1/box/%s/%s' % (USER_NAME, BOX_NAME)
     STATUS_KEY = 'upload'
 

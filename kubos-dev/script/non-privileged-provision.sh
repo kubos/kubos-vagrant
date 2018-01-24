@@ -10,6 +10,8 @@ echo 'export PATH=$PATH:"~/.cargo/bin"' >> /home/vagrant/.bashrc
 /home/vagrant/.cargo/bin/rustup target install arm-unknown-linux-gnueabihf
 # iobc target
 /home/vagrant/.cargo/bin/rustup target install arm-unknown-linux-gnueabi
+# install cargo-kubos
+cd /home/vagrant/.kubos/kubos/cargo-kubos/ && /home/vagrant/.cargo/bin/cargo install
 
 kubos update --tab-completion
 
