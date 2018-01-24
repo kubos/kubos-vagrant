@@ -22,7 +22,7 @@ from utils import BoxAutomator
 
 class BoxProvisioner(BoxAutomator):
     STATUS_KEY = 'provision'
-    VAGRANT_REPO_URL = 'https://github.com/kubostech/kubos-vagrant'
+    VAGRANT_REPO_URL = 'https://github.com/kubos/kubos-vagrant'
     DUMP_LOG_LINES = 50 # Number of lines to dump from end of logs on an error
     status_steps = {
                         'base' :      ['file',
@@ -45,7 +45,7 @@ class BoxProvisioner(BoxAutomator):
 
     def update_base_box(self):
         print 'Updating the base box'
-        self.run_cmd('vagrant', 'box', 'update', '--box', 'kubostech/base', '--provider', 'virtualbox')
+        self.run_cmd('vagrant', 'box', 'update', '--box', 'kubos/base', '--provider', 'virtualbox')
 
 
     def clone_vagrant_repo(self):
