@@ -8,9 +8,9 @@ For testing changes in the `kubos-dev` box only skip ahead to the "Testing kubos
 
 For testing the changes in the `base` box modify the Vagrantfile and provisioning scripts in the `base/` directory as needed. To test these changes in isolation from the `kubos-dev` box run:
 
-    $ vagrant build
+    $ vagrant up
 
-NOTE: To rebuild the image run `vagrant destroy` followed by `vagrant build`.
+NOTE: To rebuild the image run `vagrant destroy` followed by `vagrant up`.
 
 To apply these base changes to a `kudos-dev` build you must create a .box image. In the `kubos-vagrant/base/` directory run:
 
@@ -38,9 +38,9 @@ Modify the Vagrantfile and provisioning scripts in `kubos-vagrant/kubos-dev/` as
 
 You can rebuild the image to test locally using:
 
-    $ vagrant build
+    $ vagrant up
 
-To rebuild the image run `vagrant destroy` followed by `vagrant build`.
+To rebuild the image run `vagrant destroy` followed by `vagrant up`.
 
 :shipit:
 
