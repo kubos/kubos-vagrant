@@ -1,5 +1,5 @@
 # Rule for FTDI USB connections (ex. iOBC and STM32 UART connections)
-SUBSYSTEMS=="usb", KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="FTDI"
+SUBSYSTEMS=="usb", KERNEL=="ttyUSB*", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", GROUP="dialout", SYMLINK+="FTDI"
 
 # Rules for STM USB device (used for device firmware updates)
 ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE="666", GROUP="plugdev"
