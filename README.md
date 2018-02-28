@@ -28,7 +28,7 @@ NOTE: `--all` will remove all versions of that box if you have multiple versions
 
 Add the new base box image:
 
-    $ vagrant box add kubos/base <Path to package.box from previous `vagrant package` command>
+    $ vagrant box add kubos/base package.box
 
 Continue on to the next section.
 
