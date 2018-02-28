@@ -54,6 +54,7 @@ apt-get install -y unzip mtools
 wget https://s3.amazonaws.com/kubos-provisioning/iobc_toolchain.tar.gz
 tar -xf /home/vagrant/iobc_toolchain.tar.gz -C /usr/bin
 rm /home/vagrant/iobc_toolchain.tar.gz
+echo "export PATH=/usr/bin/iobc_toolchain/usr/bin:$PATH" >> /etc/profile
 
 #Beaglebone Black/Pumpkin MBM2 toolchain
 wget https://s3.amazonaws.com/kubos-provisioning/bbb_toolchain.tar.gz
