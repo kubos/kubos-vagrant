@@ -29,7 +29,8 @@ class BoxProvisioner(BoxAutomator):
                                        'privileged',
                                        'test',
                                        'pre-package'],
-                        'kubos-dev' : ['privileged',
+                        'kubos-dev' : ['file',
+                                       'privileged',
                                        'non-privileged',
                                        'test',
                                        'pre-package']
