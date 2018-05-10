@@ -30,7 +30,9 @@ mv /home/vagrant/libmsp430.so /usr/lib
 
 #do the pip setup and installation things
 easy_install pip
-pip install --upgrade pip
+# Need to install pip<v10 due to this issue: https://github.com/ARMmbed/yotta/issues/835
+# Forcibly controlling version until this is resolved
+pip install pip==9.0.3
 
 
 #documentation tools
