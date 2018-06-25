@@ -79,9 +79,6 @@ cd /usr/local/bin && curl -L https://github.com/luvit/lit/raw/master/get-lit.sh 
 rm /usr/local/bin/luvi
 cd /usr/local/bin && wget https://github.com/luvit/luvi-binaries/raw/master/Linux-x86_64/luvi-regular
 chmod a+x /usr/local/bin/luvi-regular
-cd /usr/local/bin && wget https://github.com/luvit/luvi-binaries/raw/master/Linux-x86_64/luvi-tiny
-chmod a+x /usr/local/bin/luvi-tiny
-
 
 #Vagrant commands may act funny without password-less sudo
 echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
