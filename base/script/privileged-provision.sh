@@ -34,6 +34,8 @@ easy_install pip
 # Forcibly controlling version until this is resolved
 pip install pip==9.0.3
 
+#sqlite
+apt-get install -y sqlite3 libsqlite3-dev
 
 #documentation tools
 apt-get install -y doxygen graphviz plantuml
