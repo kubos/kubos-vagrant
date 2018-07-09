@@ -1,5 +1,6 @@
 pip install -r https://raw.githubusercontent.com/kubos/kubos-cli/master/requirements.txt
 pip install git+https://github.com/kubos/kubos-cli
+pip install idna==2.6
 
 mkdir -p /usr/local/lib/yotta_modules
 mkdir -p /usr/local/lib/yotta_targets
