@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 
 # Copyright (C) 2017 Kubos Corporation
 #
