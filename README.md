@@ -6,7 +6,7 @@ For testing changes in the `kubos-dev` box only skip ahead to the "Testing kubos
 
 ## Testing Base Box Changes
 
-For testing the changes in the `base` box modify the Vagrantfile and provisioning scripts in the `base/` directory as needed. To test these changes in isolation from the `kubos-dev` box run:
+For testing the changes in the `base` box modify the Vagrantfile and provisioning scripts in the `base/` directory as needed. To test these changes in isolation from the `kubos-dev` box run (in the `base/` directory):
 
     $ vagrant up
 
