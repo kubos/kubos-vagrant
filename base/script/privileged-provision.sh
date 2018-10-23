@@ -17,6 +17,8 @@ apt-get install -y cmake
 apt-get install -y gcc-msp430 gdb-msp430 msp430-libc
 apt-get install -y libdbus-1-dev dbus
 
+apt-get install -y sshpass
+
 # flash tools
 apt-get install -y mspdebug
 apt-get install -y dfu-util
