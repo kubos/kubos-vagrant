@@ -14,6 +14,10 @@ echo 'export PATH=$PATH:"~/.cargo/bin"' >> /home/vagrant/.bashrc
 /home/vagrant/.cargo/bin/cargo install --git https://github.com/kubos/cargo-kubos
 # setup cargo config
 mv /home/vagrant/cargo_config /home/vagrant/.cargo/config
+# Install file-client
+/home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/kubos-file-client/
+# Install shell-client
+/home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/kubos-shell-client/
 
 kubos update --tab-completion
 
