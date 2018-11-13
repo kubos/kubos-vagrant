@@ -19,6 +19,12 @@ mv /home/vagrant/cargo_config /home/vagrant/.cargo/config
 # Install shell-client
 /home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/kubos-shell-client/
 
+# Install app-api python module
+cd /home/vagrant/.kubos/kubos/apis/app-api/python && pip install .
+
+# Install kubos-service python module
+cd /home/vagrant/.kubos/kubos/libs/kubos-service && pip install .
+
 kubos update --tab-completion
 
 echo "source /home/vagrant/.kubos/completion/kubos_completion" >> /home/vagrant/.bashrc
