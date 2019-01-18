@@ -18,6 +18,8 @@ mv /home/vagrant/cargo_config /home/vagrant/.cargo/config
 /home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/kubos-file-client/
 # Install shell-client
 /home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/kubos-shell-client/
+# Install example UART comms client
+/home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/uart-comms-client/
 
 # Install app-api python module
 cd /home/vagrant/.kubos/kubos/apis/app-api/python && pip install .
