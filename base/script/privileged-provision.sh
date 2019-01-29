@@ -8,7 +8,7 @@ add-apt-repository -y ppa:team-gcc-arm-embedded/ppa
 add-apt-repository -y ppa:george-edison55/cmake-3.x
 apt-get update
 
-apt-get upgrade -y python2.7 ncurses-dev bc
+apt-get upgrade -y python2.7 python3.5 ncurses-dev bc
 apt-get install -y build-essential libssl-dev libffi-dev libhidapi-hidraw0 gdb
 apt-get install -y python-setuptools build-essential ninja-build python-dev libffi-dev libssl-dev
 apt-get install -y gcc-arm-embedded
@@ -35,6 +35,9 @@ easy_install pip
 # Need to install pip<v10 due to this issue: https://github.com/ARMmbed/yotta/issues/835
 # Forcibly controlling version until this is resolved
 pip install pip==9.0.3
+
+# Set up pip for Python3.5
+apt-get install -y python3-pip
 
 #sqlite
 apt-get install -y sqlite3 libsqlite3-dev
