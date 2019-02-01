@@ -9,6 +9,7 @@ programs=(
     cmake
     lsusb
     python
+    python3
 )
 
 test_installed () {

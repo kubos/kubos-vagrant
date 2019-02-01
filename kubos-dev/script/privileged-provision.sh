@@ -1,7 +1,3 @@
-pip install idna==2.6
-pip install toml
-pip install graphene
-
 python3 -m pip install flask
 python3 -m pip install flask_graphql
 python3 -m pip install graphene

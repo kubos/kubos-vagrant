@@ -14,6 +14,7 @@ programs=(
     cmake
     lsusb
     python
+    python3
 )
 
 #List of file paths to test for existence
