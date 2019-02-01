@@ -22,10 +22,10 @@ mv /home/vagrant/cargo_config /home/vagrant/.cargo/config
 /home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/uart-comms-client/
 
 # Install app-api python module
-cd /home/vagrant/.kubos/kubos/apis/app-api/python && pip install .
+cd /home/vagrant/.kubos/kubos/apis/app-api/python && python3 -m pip install .
 
 # Install kubos-service python module
-cd /home/vagrant/.kubos/kubos/libs/kubos-service && pip install .
+cd /home/vagrant/.kubos/kubos/libs/kubos-service && python3 -m pip install .
 
 kubos update --tab-completion
 
