@@ -6,18 +6,10 @@ red='\E[31m'
 green='\E[32m'
 
 programs=(
-    arm-none-eabi-gcc
-    arm-none-eabi-gdb
     cmake
-    dfu-util
-    kubos
     lsusb
-    msp430-gcc
-    msp430-gdb
-    mspdebug
     python
-    openocd
-    yotta
+    python3
 )
 
 test_installed () {

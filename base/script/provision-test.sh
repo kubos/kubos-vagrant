@@ -9,26 +9,18 @@ return_code=0
 
 #Programs to ensure are installed and in the PATH
 programs=(
-    arm-none-eabi-gcc
-    arm-none-eabi-gdb
     /usr/bin/iobc_toolchain/usr/bin/arm-linux-gcc
     /usr/bin/bbb_toolchain/usr/bin/arm-linux-gcc
     cmake
-    dfu-util
     lsusb
-    msp430-gcc
-    msp430-gdb
-    mspdebug
     python
-    openocd
+    python3
 )
 
 #List of file paths to test for existence
 files=(
-    /usr/lib/libmsp430.so
     /etc/udev/rules.d/kubos-usb.rules
     /etc/minicom/minirc.kubos
-    /etc/minicom/minirc.msp430
 )
 
 test_programs_installed () {

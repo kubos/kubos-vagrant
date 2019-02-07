@@ -1,5 +1,3 @@
-kubos update --latest || true #Can't run as root or else yotta symlinks are created to /root/.kubos/...
-
 # Install rust stuff
 # We do this as vagrant because it
 # installs to $HOME/
@@ -26,9 +24,5 @@ cd /home/vagrant/.kubos/kubos/apis/app-api/python && python3 -m pip install .
 
 # Install kubos-service python module
 cd /home/vagrant/.kubos/kubos/libs/kubos-service && python3 -m pip install .
-
-kubos update --tab-completion
-
-echo "source /home/vagrant/.kubos/completion/kubos_completion" >> /home/vagrant/.bashrc
 
 echo "Finishing provisioning..."
