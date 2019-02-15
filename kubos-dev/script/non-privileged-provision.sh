@@ -4,6 +4,7 @@
 # Rust toolchain + Cargo
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 echo 'export PATH=$PATH:"~/.cargo/bin"' >> /home/vagrant/.bashrc
+/home/vagrant/.cargo/bin/rustup default 1.32.0
 # bbb/mbm2 target
 /home/vagrant/.cargo/bin/rustup target install arm-unknown-linux-gnueabihf
 # iobc target
