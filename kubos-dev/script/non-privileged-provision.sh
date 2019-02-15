@@ -5,6 +5,9 @@
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 echo 'export PATH=$PATH:"~/.cargo/bin"' >> /home/vagrant/.bashrc
 /home/vagrant/.cargo/bin/rustup default 1.32.0
+# install rust tools
+/home/vagrant/.cargo/bin/rustup component add clippy
+/home/vagrant/.cargo/bin/rustup component add rustfmt
 # bbb/mbm2 target
 /home/vagrant/.cargo/bin/rustup target install arm-unknown-linux-gnueabihf
 # iobc target
