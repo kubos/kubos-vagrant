@@ -8,7 +8,7 @@ apt-get update
 
 apt-get upgrade -y python2.7 python3.5 ncurses-dev bc
 apt-get install -y build-essential libssl-dev libffi-dev libhidapi-hidraw0 gdb
-apt-get install -y python-setuptools build-essential ninja-build python-dev libffi-dev libssl-dev
+apt-get install -y python-setuptools build-essential ninja-build python-dev libffi-dev libssl-dev pkg-config
 apt-get install -y git
 apt-get install -y cmake
 

@@ -26,6 +26,9 @@ mv /home/vagrant/cargo_config /home/vagrant/.cargo/config
 # Install app-api python module
 cd /home/vagrant/.kubos/kubos/apis/app-api/python && python3 -m pip install .
 
+# Install i2c python module
+cd /home/vagrant/.kubos/kubos/hal/python-hal/i2c && python3 -m pip install .
+
 # Install kubos-service python module
 cd /home/vagrant/.kubos/kubos/libs/kubos-service && python3 -m pip install .
 
