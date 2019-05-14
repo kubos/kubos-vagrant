@@ -19,20 +19,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Enable USB access
   usb_devs = [
-    # Required for programming new fraunchpad
-    ['0x2047', '0x0013', 'MSP4305969 Launchpad programmer'],
-    ['0x2047', '0x0203', 'MSP4305969 Launchpad FW updater'],
-    # Other USB ids from TI's udev rules.
-    ['0x2047', '0x0010', 'MSP430UIF'],
-    ['0x2047', '0x0014', 'MSP430UIF'],
-    ['0x2047', '0x0204', 'MSP430UIF'],
-    # For older fraunchpads and launchpads
-    ['0x0451', '0xf432', 'eZ430'],
-    # Misc devices
-    ['0x15ba', '0x0031', 'Olimex JTAG tiny'],
-    #STM Devices
-    ['0x0483', '0x374b', 'STM32 STLink'],
-    ['0x0483', '0xdf11', 'STM32 BOOTLOADER'],
     #FTDI Devices
     ['0x0403', '0x6001', 'FTDI']
   ]
