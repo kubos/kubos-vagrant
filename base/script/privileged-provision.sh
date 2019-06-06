@@ -23,8 +23,6 @@ pip install --upgrade pip
 
 # Set up pip for Python3.5
 apt-get install -y python3-pip
-pip3 install --upgrade pip
-pip3 install --upgrade setuptools
 
 #sqlite
 apt-get install -y sqlite3 libsqlite3-dev
