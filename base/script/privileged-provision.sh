@@ -23,6 +23,8 @@ pip install --upgrade pip
 
 # Set up pip for Python3.5
 apt-get install -y python3-pip
+pip3 install --upgrade pip
+pip3 install --upgrade setuptools
 
 #sqlite
 apt-get install -y sqlite3 libsqlite3-dev
@@ -30,7 +32,7 @@ apt-get install -y sqlite3 libsqlite3-dev
 #documentation tools
 apt-get install -y doxygen graphviz plantuml
 pip install Sphinx==1.5.6
-pip install breathe
+pip install breathe==4.12.0
 pip install sphinx-rtd-theme==0.2.4
 pip install sphinxcontrib-plantuml
 pip install sphinx-jsondomain
