@@ -1,4 +1,4 @@
-# Copyright (C) 2017 Kubos Corporation
+# Copyright (C) 2019 Kubos Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -38,15 +38,6 @@ class BoxProvisioner(BoxAutomator):
 
     def __init__(self, args):
         super(BoxProvisioner, self).__init__(args)
-        if self.name == 'kubos-dev':
-            # Pull the latest base box if there's a new one available
-            # Vagrant doesn't allow tagging local boxes with version #'s
-            self.update_base_box()
-
-
-    def update_base_box(self):
-        print 'Updating the base box'
-        self.run_cmd('vagrant', 'box', 'update', '--box', 'kubos/base', '--provider', 'virtualbox')
 
 
     def clone_vagrant_repo(self):

@@ -9,6 +9,8 @@ red='\E[31m'
 green='\E[32m'
 
 programs=(
+    /usr/bin/iobc_toolchain/usr/bin/arm-linux-gcc
+    /usr/bin/bbb_toolchain/usr/bin/arm-linux-gcc
     cmake
     lsusb
     python
@@ -17,6 +19,22 @@ programs=(
     kubos-shell-client
     uart-comms-client
 )
+
+#List of file paths to test for existence
+files=(
+    /etc/udev/rules.d/kubos-usb.rules
+    /etc/minicom/minirc.kubos
+)
+
+test_files_exist() {
+    if test -e $1
+    then
+        printf "$green$1 => found\n"
+    else
+        printf "$red$1 => not found\n" >&2
+        return_code=1
+    fi
+}
 
 test_installed () {
     if command -v $1 > /dev/null
@@ -28,11 +46,19 @@ test_installed () {
     tput sgr0 #reset to normal text output
 }
 
+# Test for programs
 for prog in "${programs[@]}"
 do
     test_installed $prog
 done
 
+# Test for files
+for file in "${files[@]}"
+do
+    test_files_exist $file
+done
+
+# Run source level tests for basic sanity
 git clone https://github.com/kubos/kubos --depth 1
 cd kubos
 
