@@ -91,7 +91,7 @@ class BoxAutomator(object):
 
     def setup_status(self):
         if not os.path.isfile(self.STATUS_FILE):
-            super(BoxProvisioner, self).setup_status_file()
+            self.setup_status_file()
 
         data = self.load_status(self.STATUS_FILE)
         if self.STATUS_KEY not in data[self.name]:

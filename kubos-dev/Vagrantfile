@@ -5,7 +5,9 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "kubos/base"
+  config.vm.box = "velocity42/xenial64"
+  config.vm.provision "file", source: "./bin/minirc.kubos", destination: "~/minirc.kubos"
+  config.vm.provision "file", source: "./bin/kubos-usb.rules", destination: "~/kubos-usb.rules"
   config.vm.provision "file", source: "./bin/cargo_config", destination: "~/cargo_config"
   config.vm.provision "privileged",    type: "shell", path: "./script/privileged-provision.sh"
   config.vm.provision "non-privileged", type: "shell", path: "./script/non-privileged-provision.sh", privileged: false

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (C) 2017 Kubos Corporation
+# Copyright (C) 2019 Kubos Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,18 +29,14 @@ def build_box(args):
         provision_box(args)
     if args.all or args.package:
         package_box(args)
-    if args.all or args.upload:
-        upload_box(args)
+    # Upload is currently broken, so don't even try
+    # if args.all or args.upload:
+    #     upload_box(args)
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Provision and package the kubos/base and/or kubos/kubos-dev box and upload it to the Vagrant Cloud.')
-
-    parser.add_argument('box_name',
-                        nargs=1,
-                        choices=['all', 'base', 'kubos-dev'],
-                        help='Specify the vagrant box name')
+        description='Provision and package the kubos/kubos-dev box.')
 
     parser.add_argument('version',
                         nargs=1,
@@ -92,14 +88,8 @@ def main():
 
     args, following_args = parser.parse_known_args()
     args.version = args.version[0] # Version is initially a list of 1 element
-    args.box_name = args.box_name[0]
-    if args.box_name == 'all':
-        args.box_name = 'base'
-        build_box(args)
-        args.box_name = 'kubos-dev'
-        build_box(args)
-    else:
-        build_box(args)
+    args.box_name = "kubos-dev"
+    build_box(args)
 
 
 if __name__ == '__main__':
