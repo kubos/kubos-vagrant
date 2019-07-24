@@ -1,10 +1,8 @@
 # These start an interactive prompt - I can't figure out how to fix it yet...
 sudo apt-mark hold grub-common grub-pc grub-pc-bin grub2-common
 
-apt-get update
+apt-get update -y
 apt-get install -y software-properties-common
-
-apt-get update
 
 apt-get upgrade -y python2.7 python3.5 ncurses-dev bc
 apt-get install -y build-essential libssl-dev libffi-dev libhidapi-hidraw0 gdb
@@ -18,11 +16,10 @@ apt-get install -y sshpass
 apt-get install -y linux-image-extra-virtual
 
 # Do the pip setup and installation things
-easy_install pip
-pip install --upgrade pip
+apt-get install -y python-pip python3-pip python3-setuptools
 
-# Set up pip for Python3.5
-apt-get install -y python3-pip
+pip install wheel
+pip3 install wheel
 
 # sqlite
 apt-get install -y sqlite3 libsqlite3-dev
