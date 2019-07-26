@@ -29,10 +29,6 @@ def build_box(args):
         provision_box(args)
     if args.all or args.package:
         package_box(args)
-    # Upload is currently broken, so don't even try
-    # if args.all or args.upload:
-    #     upload_box(args)
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -40,7 +36,7 @@ def main():
 
     parser.add_argument('version',
                         nargs=1,
-                        help='Specify the version of the upload.')
+                        help='Specify the version of the box.')
 
     resume_parser = parser.add_mutually_exclusive_group(required=False)
     resume_parser.add_argument('--resume', dest='resume', action='store_true')
@@ -50,7 +46,7 @@ def main():
     parser.add_argument('-a', '--all',
                         action='store_true',
                         default=False,
-                        help='Provision, Package and Upload the box to Vagrant Cloud.')
+                        help='Provision and Package the box.')
 
     parser.add_argument('-l', '--local',
                         action='store_true',
@@ -71,16 +67,6 @@ def main():
                         action='store_true',
                         default=False,
                         help='Package the box and exit. Skip provisioning and uploading the box.')
-
-    parser.add_argument('-u', '--upload',
-                        action='store_true',
-                        default=False,
-                        help='Skip the provisioning and building steps. Only upload the box.')
-
-    parser.add_argument('--halt-release',
-                        action='store_true',
-                        default=False,
-                        help='Do not release after uploading the box.')
 
     parser.add_argument('-b', '--box',
                         default=None,
