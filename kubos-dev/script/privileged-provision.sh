@@ -4,41 +4,31 @@ sudo apt-mark hold grub-common grub-pc grub-pc-bin grub2-common
 apt-get update -y
 apt-get install -y software-properties-common
 
-apt-get upgrade -y python2.7 python3.5 ncurses-dev bc
+apt-get upgrade -y python3.5 ncurses-dev bc
 apt-get install -y build-essential libssl-dev libffi-dev libhidapi-hidraw0 gdb
-apt-get install -y python-setuptools build-essential ninja-build python-dev libffi-dev libssl-dev pkg-config
+apt-get install -y build-essential ninja-build python-dev libffi-dev libssl-dev pkg-config
 apt-get install -y git
 apt-get install -y cmake
-
 apt-get install -y sshpass
 
 # Install kernel additions for better USB device recognition
 apt-get install -y linux-image-extra-virtual
 
 # Do the pip setup and installation things
-apt-get install -y python-pip python3-pip python3-setuptools
+apt-get install -y python3-pip python3-setuptools
 
-pip install wheel
 pip3 install wheel
+
+# Install all Kubos python dependencies
+git clone https://github.com/kubos/kubos --depth 1
+pip3 install -r kubos/requirements.txt
+rm -r kubos
 
 # sqlite
 apt-get install -y sqlite3 libsqlite3-dev
 
 # Documentation tools
 apt-get install -y doxygen graphviz plantuml
-pip install Sphinx==1.5.6
-pip install breathe==4.12.0
-pip install sphinx-rtd-theme==0.2.4
-pip install sphinxcontrib-plantuml
-pip install sphinx-jsondomain
-
-# Dependencies for app-api & kubos-service
-python3 -m pip install flask
-python3 -m pip install flask_graphql
-python3 -m pip install graphene
-python3 -m pip install mock
-python3 -m pip install toml
-python3 -m pip install responses
 
 # KubOS Linux setup
 echo "Installing KubOS Linux Toolchains"
