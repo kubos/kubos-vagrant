@@ -4,7 +4,7 @@
 # Rust toolchain + Cargo
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 echo 'export PATH=$PATH:"~/.cargo/bin"' >> /home/vagrant/.bashrc
-/home/vagrant/.cargo/bin/rustup default 1.32.0
+/home/vagrant/.cargo/bin/rustup default 1.36.0
 # install rust tools
 /home/vagrant/.cargo/bin/rustup component add clippy
 /home/vagrant/.cargo/bin/rustup component add rustfmt
