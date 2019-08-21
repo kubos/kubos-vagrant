@@ -17,11 +17,11 @@ echo 'export PATH=$PATH:"~/.cargo/bin"' >> /home/vagrant/.bashrc
 # setup cargo config
 mv /home/vagrant/cargo_config /home/vagrant/.cargo/config
 # Install file-client
-/home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/kubos-file-client/
+/home/vagrant/.cargo/bin/cargo install --bin kubos-file-client --path /home/vagrant/.kubos/kubos/clients/kubos-file-client/
 # Install shell-client
-/home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/kubos-shell-client/
+/home/vagrant/.cargo/bin/cargo install --bin kubos-shell-client --path /home/vagrant/.kubos/kubos/clients/kubos-shell-client/
 # Install example UART comms client
-/home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/uart-comms-client/
+/home/vagrant/.cargo/bin/cargo install --bin uart-comms-client --path /home/vagrant/.kubos/kubos/clients/uart-comms-client/
 
 # Install app-api python module
 cd /home/vagrant/.kubos/kubos/apis/app-api/python && python3 -m pip install .

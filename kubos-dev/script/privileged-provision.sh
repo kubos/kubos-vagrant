@@ -59,7 +59,7 @@ adduser vagrant dialout
 echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 mkdir -p /home/vagrant/.kubos
-git clone https://github.com/kubos/kubos /home/vagrant/.kubos/kubos
+git clone https://github.com/kubos/kubos /home/vagrant/.kubos/kubos --depth 1
 chown -R vagrant /home/vagrant/.kubos
 
 echo "Finished root provisioning"
