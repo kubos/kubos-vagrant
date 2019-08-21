@@ -1,4 +1,12 @@
 #Cleaning up before distribution
+#Clear out the cache
+rm -rf /var/cache/*
+
+#Making all empty storage zeros allows the final box to be better compressed
+dd if=/dev/zero of=/EMPTY bs=1M
+rm -f /EMPTY
+sync
+
 
 #Change the ssh key to the default vagrant insecure key so others can ssh in when they start this box locally
 echo " Changing SSH keys"

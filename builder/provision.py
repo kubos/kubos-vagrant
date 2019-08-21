@@ -30,7 +30,10 @@ class BoxProvisioner(BoxAutomator):
                                        'test',
                                        'pre-package'],
                         'kubos-dev' : ['file',
-                                       'privileged']
+                                       'privileged',
+                                       'non-privileged',
+                                       'test',
+                                       'pre-package']
                       }
 
     def __init__(self, args):
