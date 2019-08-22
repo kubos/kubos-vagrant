@@ -72,7 +72,7 @@ class BoxProvisioner(BoxAutomator):
 
     def dump_log(self):
         print('Dumping last {} lines of log: {}\n\n'.format(self.DUMP_LOG_LINES, self.step_log))
-        print(self.run_cmd('tail', '-n', '%i' % self.DUMP_LOG_LINES, self.step_log))
+        print(self.run_cmd('tail', '-n', '{}'.format(self.DUMP_LOG_LINES), self.step_log))
 
 
     def provision(self):

@@ -1,3 +1,6 @@
+#!/bin/bash
+set -ex
+
 # Install rust stuff
 # We do this as vagrant because it
 # installs to $HOME/

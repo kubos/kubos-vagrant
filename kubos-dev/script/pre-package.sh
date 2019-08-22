@@ -1,3 +1,6 @@
+#!/bin/bash
+set -x
+
 #Cleaning up before distribution
 #Clear out the cache
 rm -rf /var/cache/*
