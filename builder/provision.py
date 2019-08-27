@@ -51,7 +51,7 @@ class BoxProvisioner(BoxAutomator):
         if self.resume:
             res = self.check_status(step)
             if res == True:
-                print "Step %s already performed.. Skipping.." % step
+                print("Step {} already performed.. Skipping..".format(step))
                 return
             if res == None:
                 self.setup_status_file()
@@ -59,26 +59,26 @@ class BoxProvisioner(BoxAutomator):
         self.check_log_dir()
         self.step_log = os.path.join(self.LOG_DIR, step + '-' + 'output.log')
         log_cm = vagrant.make_file_cm(self.step_log)
-        print 'Logging to file: %s' % self.step_log
+        print('Logging to file: {}'.format(self.step_log))
         v = vagrant.Vagrant(out_cm=log_cm, err_cm=log_cm)
         try:
             v.up(provision_with=[step], **kwargs)
             self.update_status(step)
         except subprocess.CalledProcessError as e:
-            print>>sys.stderr, 'Error: The provision step %s failed with error code %i.' % (step, e.returncode)
+            print('Error: The provision step {} failed with error code {}.'.format(step, e.returncode), file=sys.stderr)
             self.dump_log()
             sys.exit(1)
 
 
     def dump_log(self):
-        print 'Dumping last %i lines of log: %s\n\n' %  (self.DUMP_LOG_LINES, self.step_log)
-        print self.run_cmd('tail', '-n', '%i' % self.DUMP_LOG_LINES, self.step_log)
+        print('Dumping last {} lines of log: {}\n\n'.format(self.DUMP_LOG_LINES, self.step_log))
+        print(self.run_cmd('tail', '-n', '{}'.format(self.DUMP_LOG_LINES), self.step_log))
 
 
     def provision(self):
         self.box_dir = os.path.join(os.getcwd(), self.name)
         if not os.path.isdir(self.box_dir):
-            print >>sys.stderr, "The requested box directory: %s does not exist" % self.box_dir
+            print("The requested box directory: {} does not exist".format(self.box_dir), file=sys.stderr)
             sys.exit(1)
         os.chdir(self.box_dir)
         self.post_clone_setup()
@@ -107,5 +107,5 @@ def provision_box(args):
     else:
         provisioner.clone_vagrant_repo()
     provisioner.provision()
-    print 'Provisioning successfully completed...'
+    print('Provisioning successfully completed...')
 

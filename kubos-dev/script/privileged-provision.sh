@@ -1,3 +1,6 @@
+#!/bin/bash
+set -ex
+
 # These start an interactive prompt - I can't figure out how to fix it yet...
 sudo apt-mark hold grub-common grub-pc grub-pc-bin grub2-common
 
@@ -10,6 +13,11 @@ apt-get install -y build-essential ninja-build python-dev libffi-dev libssl-dev 
 apt-get install -y git
 apt-get install -y cmake
 apt-get install -y sshpass
+# resolvconf is no longer included by default as of Ubuntu 18.04
+apt-get install -y resolvconf
+rm -f /etc/resolv.conf
+# There's something wrong with the default resolv.conf symlink. This fixes it
+ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
 # Install kernel additions for better USB device recognition
 apt-get install -y linux-image-extra-virtual
@@ -59,7 +67,7 @@ adduser vagrant dialout
 echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 mkdir -p /home/vagrant/.kubos
-git clone https://github.com/kubos/kubos /home/vagrant/.kubos/kubos
+git clone https://github.com/kubos/kubos /home/vagrant/.kubos/kubos --depth 1
 chown -R vagrant /home/vagrant/.kubos
 
 echo "Finished root provisioning"

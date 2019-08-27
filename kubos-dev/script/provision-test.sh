@@ -3,7 +3,7 @@
 #To add more programs to check for add them to the programs array.
 #Also runs standard CI tests to check if dev dependencies are installed and available
 
-set -e
+set -ex
 
 red='\E[31m'
 green='\E[32m'
