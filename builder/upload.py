@@ -57,22 +57,22 @@ class BoxUploader(BoxAutomator):
         self.setup_status()
 
         if self.ACCESS_TOKEN is None:
-            print >>sys.stderr, 'The VAGRANT_CLOUD_ACCESS_TOKEN environment variable needs to be set.'
+            print('The VAGRANT_CLOUD_ACCESS_TOKEN environment variable needs to be set.')
             sys.exit(1)
 
 
     def check_http_response(self, res):
         if not res.ok:
-            print >>sys.stderr, 'Something went wrong. Received a %i return code' % res.status_code
-            print >>sys.stderr, res.content
+            print('Something went wrong. Received a {} return code'.format(res.status_code), file=sys.stderr)
+            print(res.content, file=sys.stderr)
             sys.exit(1)
 
 
     def create_version(self):
         if self.resume:
             if self.check_status('create_version'):
-                print 'Version previously created.. Skipping...'
-        print 'Attempting to create version %s' % self.version
+                print('Version previously created.. Skipping...')
+        print('Attempting to create version {}'.format(self.version))
         create_url = '%s/versions' % self.BASE_URL
         headers = {
                    'X-Atlas-Token': self.ACCESS_TOKEN
@@ -89,8 +89,8 @@ class BoxUploader(BoxAutomator):
     def create_provider(self):
         if self.resume:
             if self.check_status('create_provider'):
-                print 'Provider previously created... Skipping...'
-        print 'Creating Provider...'
+                print('Provider previously created... Skipping...')
+        print('Creating Provider...')
         create_url = '%s/version/%s/providers' % (self.BASE_URL, self.version)
         headers = {
                    'X-Atlas-Token': self.ACCESS_TOKEN
@@ -105,7 +105,7 @@ class BoxUploader(BoxAutomator):
 
 
     def get_upload_status(self):
-        print 'Getting Upload Status...'
+        print('Getting Upload Status...')
         status_url = '%s/version/%s/provider/virtualbox/upload?access_token=%s'\
                         % (self.BASE_URL, self.version, self.ACCESS_TOKEN)
         res = requests.get(status_url)
@@ -117,8 +117,8 @@ class BoxUploader(BoxAutomator):
     def submit_upload(self,  upload_url):
         if self.resume:
             if self.check_status('submit_upload'):
-                print 'Box previously uploaded... Skipping...'
-        print 'Uploading box file %s' % self.path
+                print('Box previously uploaded... Skipping...')
+        print('Uploading box file {}'.format(self.path))
         # The requests mulitpart file upload is being rejected by the Vagrant API - Just using a curl shell command for now
         # upload_file = {'file': open(path)}
         # res = requests.put(upload_url, files=upload_file)
@@ -130,8 +130,8 @@ class BoxUploader(BoxAutomator):
     def release_version(self):
         if self.resume:
             if self.check_status('release_version'):
-                print 'Version previously released... Skipping...'
-        print 'Releasing Version: %s' % self.version
+                print('Version previously released... Skipping...')
+        print('Releasing Version: {}'.format(self.version))
         release_url = '%s/version/%s/release' % (self.BASE_URL, self.version)
         headers = {
                    'X-Atlas-Token': self.ACCESS_TOKEN
@@ -177,7 +177,7 @@ def upload_box(args):
 
     if success_key in status_data:
         if not status_data[success_key]:
-            print >>sys.stderr,'Errors: %s' % status_data[errors_key]
+            print('Errors: {}'.format(status_data[errors_key]), file=sys.stderr)
             sys.exit(1)
     upload_url   = status_data['upload_path']
     upload_token = status_data['token']
@@ -191,9 +191,9 @@ def upload_box(args):
         hosted_token = verification_response.json()['hosted_token']
 
         if upload_token == hosted_token:
-            print 'Successfully uploaded and released box %s/%s version %s' % (uploader.USER_NAME, uploader.BOX_NAME, uploader.version)
+            print('Successfully uploaded and released box {}/{} version {}'.format(uploader.USER_NAME, uploader.BOX_NAME, uploader.version))
             uploader.update_status('verify_release')
         else:
-            print >>sys.stderr, 'The upload and hosted tokens do not match - Something went wrong with the upload and release process'
+            print('The upload and hosted tokens do not match - Something went wrong with the upload and release process', file=sys.stderr)
             sys.exit(1)
 

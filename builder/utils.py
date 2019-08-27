@@ -131,19 +131,19 @@ class BoxAutomator(object):
             repo_git_dir = os.path.join(repo_dir, '.git')
             if not os.path.isdir(repo_git_dir):
                 repo = git.Repo.clone_from(repo_url, repo_dir)
-                print 'Successfully cloned repo: %s' % repo_url
+                print('Successfully cloned repo: {}'.format(repo_url))
             else:
                 repo = git.Repo(repo_dir)
             self.fetch_tags(repo)
             return repo
         except git.exc.GitCommandError as e:
-            print 'Error: there was an error accessing the remote git repository...'
-            print 'The specific error is: \n\n %s' % e
+            print('Error: there was an error accessing the remote git repository...')
+            print('The specific error is: \n\n {}'.format(e))
 
 
     def fetch_tags(self, repo):
         origin = repo.remotes.origin
-        print 'Pulling latest tags..'
+        print('Pulling latest tags..')
         origin.fetch()
 
 
@@ -151,8 +151,8 @@ class BoxAutomator(object):
         try:
             repo.git.checkout(ref)
         except:
-            print 'There was an error checking out branch "%s"' % ref
-            print 'The error details are: %s' %  sys.exc_info()[0]
+            print('There was an error checking out branch "{}"'.format(ref))
+            print('The error details are: {}'.format(sys.exc_info()[0]))
 
 
     '''
@@ -160,19 +160,19 @@ class BoxAutomator(object):
     '''
 
     def mkdir(self, path):
-        print 'making directory: %s' % path
+        print('Making directory: {}'.format(path))
         if not os.path.isdir(path):
             os.makedirs(path)
 
 
     def validate_path(self, path):
         if not path:
-            print 'Path was not provided. Using the default path...'
+            print('Path was not provided. Using the default path...')
             self.path = os.path.join(os.getcwd(), self.name)
         if os.path.isfile(self.path): # If it's pointing to a Vagrantfile - we want the directory name
             self.path = os.path.dirname(self.path)
         if not self.VAGRANT_FILE in os.listdir(self.path):
-            print >>sys.stderr, 'Error: %s is not a valid path to a Vagrantfile or to a valid box directory' % path
+            print('Error: {} is not a valid path to a Vagrantfile or to a valid box directory'.format(path), file=sys.stderr)
             sys.exit(1)
         os.chdir(self.path)
 
@@ -183,23 +183,23 @@ class BoxAutomator(object):
         self.validate_path(args.box)
         self.box_path = os.path.join(self.path, self.BOX_FILE_NAME)
         if not os.path.isfile(self.box_path):
-            print >> sys.stderr, 'Error: The requested upload path: %s is not a vaild package.box file' % self.box_path
+            print('Error: The requested upload path: {} is not a vaild package.box file'.format(self.box_path), file=sys.stderr)
 
 
     def run_cmd(self, *args, **kwargs):
         cwd = kwargs.get('cwd', os.getcwd())
-        print ' '.join(args)
+        print(' '.join(args))
 
         try:
             return subprocess.check_output(args, **kwargs)
-        except subprocess.CalledProcessError, e:
-            print >>sys.stderr, 'Error executing command %s' % (args)
+        except subprocess.CalledProcessError as e:
+            print('Error executing command {}'.format(args), file=sys.stderr)
             sys.exit(1)
 
 
     def clean(self):
         if os.path.isdir(self.VERSION_DIR):
-            print 'Cleaning existing build directory %s' % self.VERSION_DIR
+            print('Cleaning existing build directory {}'.format(self.VERSION_DIR))
             shutil.rmtree(self.VERSION_DIR)
             self.setup_dirs()
 
@@ -208,7 +208,7 @@ class BoxAutomator(object):
         dest_dir = os.path.join(self.VERSION_DIR, box_name)
         source_dir = os.path.abspath(os.path.join(__file__, '..', '..', box_name))
         if os.path.isdir(dest_dir):
-            print 'Destination directory %s already exists... Skipping copy' % dest_dir
+            print('Destination directory {} already exists... Skipping copy'.format(dest_dir))
         else:
             shutil.copytree(source_dir, dest_dir)
 

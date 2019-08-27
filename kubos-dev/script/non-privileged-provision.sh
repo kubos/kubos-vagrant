@@ -1,13 +1,18 @@
+#!/bin/bash
+set -ex
+
 # Install rust stuff
 # We do this as vagrant because it
 # installs to $HOME/
 # Rust toolchain + Cargo
-curl https://sh.rustup.rs -sSf | sh -s -- -y
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 echo 'export PATH=$PATH:"~/.cargo/bin"' >> /home/vagrant/.bashrc
-/home/vagrant/.cargo/bin/rustup default 1.32.0
+/home/vagrant/.cargo/bin/rustup default 1.36.0
 # install rust tools
 /home/vagrant/.cargo/bin/rustup component add clippy
 /home/vagrant/.cargo/bin/rustup component add rustfmt
+# Remove the toolchain docs because we don't need them and they take up 600MB of space
+rm -rf /home/vagrant/.rustup/*/share/doc
 # bbb/mbm2 target
 /home/vagrant/.cargo/bin/rustup target install arm-unknown-linux-gnueabihf
 # iobc target
@@ -17,11 +22,13 @@ echo 'export PATH=$PATH:"~/.cargo/bin"' >> /home/vagrant/.bashrc
 # setup cargo config
 mv /home/vagrant/cargo_config /home/vagrant/.cargo/config
 # Install file-client
-/home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/kubos-file-client/
+/home/vagrant/.cargo/bin/cargo install --bin kubos-file-client --path /home/vagrant/.kubos/kubos/clients/kubos-file-client/
 # Install shell-client
-/home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/kubos-shell-client/
+/home/vagrant/.cargo/bin/cargo install --bin kubos-shell-client --path /home/vagrant/.kubos/kubos/clients/kubos-shell-client/
 # Install example UART comms client
-/home/vagrant/.cargo/bin/cargo install --path /home/vagrant/.kubos/kubos/clients/uart-comms-client/
+/home/vagrant/.cargo/bin/cargo install --bin uart-comms-client --path /home/vagrant/.kubos/kubos/clients/uart-comms-client/
+# Cleanup temporary build files
+rm -rf /home/vagrant/.kubos/kubos/target
 
 # Install app-api python module
 cd /home/vagrant/.kubos/kubos/apis/app-api/python && python3 -m pip install .
