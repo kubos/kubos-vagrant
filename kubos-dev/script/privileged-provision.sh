@@ -7,7 +7,7 @@ sudo apt-mark hold grub-common grub-pc grub-pc-bin grub2-common
 apt-get update -y
 apt-get install -y software-properties-common
 
-apt-get upgrade -y python3.5 ncurses-dev bc
+apt-get upgrade -y python3.7 ncurses-dev bc
 apt-get install -y build-essential libssl-dev libffi-dev libhidapi-hidraw0 gdb
 apt-get install -y build-essential ninja-build python-dev libffi-dev libssl-dev pkg-config
 apt-get install -y git
