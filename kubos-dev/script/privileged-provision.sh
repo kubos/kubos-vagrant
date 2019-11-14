@@ -37,6 +37,7 @@ apt-get install -y sqlite3 libsqlite3-dev
 
 # Documentation tools
 apt-get install -y doxygen graphviz plantuml
+apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended latexmk texlive-fonts-extra
 
 # KubOS Linux setup
 echo "Installing KubOS Linux Toolchains"
