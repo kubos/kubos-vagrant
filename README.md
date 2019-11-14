@@ -53,3 +53,11 @@ The process for uploading a new Vagrant release is currently a manual one.
 - Click the `kubos-dev` link at the top of the page. You should see a list of available versions.
 - The newly created version will be there with `unreleased` next to it. Click the `Release` button.
 - This will take you to the `Release Box Version` page. Click `Release version` to make the release available.
+
+## Updating Python requirements
+
+Python requirements are maintained using the [pip-tools](https://github.com/jazzband/pip-tools) toolchain. See [pip-tools#installation](https://github.com/jazzband/pip-tools#installation). The `requirements.txt` file is generated using to `pip-compile` command from the list of dependencies specified in `requirements.in`. To update requirements, run:
+
+```
+pip-compile --output-file requirements.txt requirements.in
+```
