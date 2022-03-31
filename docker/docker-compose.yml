@@ -1,0 +1,10 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  kubos-dev:
+    # build: .
+    image: kubos-dev
+    # volumes:
+    #   - .:/vagrant
+    entrypoint: "bash"
+    stdin_open: true
+    tty: true
