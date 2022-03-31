@@ -3,8 +3,8 @@ services:
   kubos-dev:
     # build: .
     image: kubos-dev
-    # volumes:
-    #   - .:/vagrant
+    volumes:
+      - .:/vagrant
     entrypoint: "bash"
     stdin_open: true
     tty: true
