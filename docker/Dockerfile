@@ -1,8 +1,8 @@
-# kubos/kubos-dev:1.20.1
-
 FROM ubuntu:18.04
 
-MAINTAINER catherine@kubos.com, ryan@kubos.com
+LABEL org.opencontainers.image.authors="catherine@kubos.com, ryan@kubos.com" \
+	version="1.20.1" \
+	com.example.vendor="The KubOS Community"
 
 RUN apt-get update -y
 
