@@ -1,4 +1,4 @@
-# kubos/kubos-dev:1.20.0
+# kubos/kubos-dev:1.20.1
 
 FROM ubuntu:18.04
 
