@@ -7,3 +7,6 @@ services:
     entrypoint: "bash"
     stdin_open: true
     tty: true
+    # if you have a device you want to make available in the VM, uncomment this
+    # devices:
+    # - "/dev/ttyUSB0:/dev/FTDI"
