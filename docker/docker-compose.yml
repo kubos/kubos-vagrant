@@ -1,8 +1,7 @@
 version: "3.9"  # optional since v1.27.0
 services:
-  kubos-dev:
-    # build: .
-    image: kubos-dev
+  kubos-sdk:
+    image: kubos-sdk
     volumes:
       - .:/vagrant
     entrypoint: "bash"
