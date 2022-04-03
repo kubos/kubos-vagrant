@@ -22,7 +22,7 @@ If you want a one-time setup, use this copy command from this directory to creat
 If you want to automatically keep things in sync, use a symlink: `ln -s /full/path/to/docker/docker-compose.yml ./path/to/your/Vagrantfile`
 
 ### Running the container
-To get a shell into the container similar to vagrant ssh, use `docker-compose run --rm kubos-dev` from the directory where you copoed the compose file to.
+To get a shell into the container similar to vagrant ssh, use `docker-compose run --rm kubos-sdk` from the directory where you copoed the compose file to.
 
 The docker container will auto-mount this directory into the container at the mount point /vagrant just like the KubOS Vagrant SDK.
 
