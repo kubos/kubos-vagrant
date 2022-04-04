@@ -1,5 +1,19 @@
 FROM kubos-base
 
+
+# Create user accounts
+RUN useradd --create-home --shell /bin/bash kubos
+RUN adduser kubos sudo
+RUN adduser kubos dialout
+
+RUN echo 'kubos:Kubos123' | chpasswd
+
+#Vagrant commands may act funny without password-less sudo
+RUN echo "kubos ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+USER kubos
+WORKDIR /home/kubos
+
 # Install all Kubos Python dependencies
 RUN git clone https://github.com/kubos/kubos --depth 1 && pip3 install -r kubos/requirements.txt && rm -r kubos
 
@@ -15,13 +29,7 @@ RUN /root/.cargo/bin/cargo install --git https://github.com/kubos/cargo-kubos
 COPY ../bin/cargo_config /root/.cargo/config
 
 
-# Create user accounts
-RUN useradd --create-home --shell /bin/bash kubos
-RUN adduser kubos sudo
 
-RUN echo 'kubos:Kubos123' | chpasswd
 
-USER kubos
-WORKDIR /home/kubos
 
 
