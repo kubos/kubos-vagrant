@@ -14,8 +14,12 @@ RUN echo "kubos ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 USER kubos
 WORKDIR /home/kubos
 
+RUN mkdir -p /home/kubos/.kubos
 # Install all Kubos Python dependencies
-RUN git clone https://github.com/kubos/kubos --depth 1 && pip3 install -r kubos/requirements.txt && rm -r kubos
+
+RUN git clone https://github.com/kubos/kubos /home/kubos/.kubos/kubos --depth 1 && pip3 install -r kubos/requirements.txt
+#&& rm -r kubos
+RUN chown -R kubos /home/kubos/.kubos
 
 # Setup rust stuff
 ENV PATH "$PATH:/root/.cargo/bin"
