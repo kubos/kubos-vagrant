@@ -45,7 +45,7 @@ WORKDIR /home/kubos
 RUN mkdir -p /home/kubos/.kubos
 # Install all Kubos Python dependencies
 
-RUN git clone https://github.com/kubos/kubos /home/kubos/.kubos/kubos --depth 1 && pip3 install -r kubos/requirements.txt
+RUN git clone https://github.com/kubos/kubos /home/kubos/.kubos/kubos --depth 1 && pip3 install -r /home/kubos/.kubos/kubos/requirements.txt
 #&& rm -r kubos
 RUN chown -R kubos /home/kubos/.kubos
 
