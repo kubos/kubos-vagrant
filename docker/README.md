@@ -3,9 +3,13 @@ This folder contains a docker environment for developing KubOS.
 It consists of a couple docker containers and a script of some kind (currently docker compose) to make the experience as similar as possible to "vagrant up".
 
 ## Containers
-The top level dockerfile is for the `kubos-dev` image and is meant to be a base image suitable for expanding on or using for things like CI builds.
+There are three containers at play here to keep things organized:
 
-inside the `sdk` dir you will find a dockerfile for a `kubos-sdk` image that builds off of this base to  hopefully attempt to do a better job at emulating the Kubos SDK (and the KubOS environment) by doing things like setting up users and home directories.
+**kubos-base** - a base image containing dependencies that must be installed from a priviliged account (root)
+
+**kubos-build** - this image is intended to be a replica of what is currently being used for CI builds
+
+**kubos-sdk** - this image is intended to emulate the KubOS SDK vagrant envrionment as closely as possible and installs many dependencies under a regular user account
 
 ## Setup
 ### Building the images
