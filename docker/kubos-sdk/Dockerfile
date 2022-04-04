@@ -13,7 +13,8 @@ RUN apt-get install -y sshpass
 
 
 # Documentation tools
-RUN apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended latexmk texlive-fonts-extra
+# latex stuff takes up a fair bit of space. lets wait and see how necessary this is
+# RUN apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended latexmk texlive-fonts-extra
 
 # KubOS Linux setup
 # echo "Installing KubOS Linux Toolchains"
