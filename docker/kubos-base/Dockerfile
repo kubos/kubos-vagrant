@@ -15,6 +15,13 @@ RUN apt-get install --no-install-recommends -y python file rsync bc cpio ncurses
 #Tools to generate docs
 RUN apt-get install --no-install-recommends -y doxygen graphviz plantuml
 
+# resolvconf is no longer included by default as of Ubuntu 18.04
+# apt-get install -y resolvconf
+# rm -f /etc/resolv.conf
+# # There's something wrong with the default resolv.conf symlink. This fixes it
+# ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
+
 # Install pip for Python2 and Python3
 RUN apt-get install --no-install-recommends -y python3-pip python3-setuptools
 
