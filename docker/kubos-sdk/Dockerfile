@@ -61,7 +61,21 @@ RUN /home/kubos/.cargo/bin/cargo install --git https://github.com/kubos/cargo-ku
 COPY ../bin/cargo_config /home/kubos/.cargo/config
 
 
+RUN /home/kubos/.cargo/bin/cargo install --bin kubos-file-client --path /home/kubos/.kubos/kubos/clients/kubos-file-client/
+# Install shell-client
+RUN /home/kubos/.cargo/bin/cargo install --bin kubos-shell-client --path /home/kubos/.kubos/kubos/clients/kubos-shell-client/
+# Install example UART comms client
+RUN /home/kubos/.cargo/bin/cargo install --bin uart-comms-client --path /home/kubos/.kubos/kubos/clients/uart-comms-client/
+# Cleanup temporary build files
+RUN rm -rf /home/kubos/.kubos/kubos/target
 
+# Install app-api python module
+RUN cd /home/kubos/.kubos/kubos/apis/app-api/python && python3 -m pip install .
 
+# Install i2c python module
+RUN cd /home/kubos/.kubos/kubos/hal/python-hal/i2c && python3 -m pip install .
+
+# Install kubos-service python module
+RUN cd /home/kubos/.kubos/kubos/libs/kubos-service && python3 -m pip install .
 
 
