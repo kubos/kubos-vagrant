@@ -24,6 +24,11 @@ RUN apt-get install -y minicom
 # Utilities for building KubOS Linux
 RUN apt-get install -y mtools
 
+
+# Copy configs
+COPY ../bin/minirc.kubos /etc/minicom/minirc.kubos
+COPY ../bin/kubos-usb.rules /etc/udev/rules.d/kubos-usb.rules
+
 # Create user accounts
 RUN useradd --create-home --shell /bin/bash kubos
 RUN adduser kubos sudo
