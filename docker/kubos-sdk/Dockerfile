@@ -26,8 +26,8 @@ RUN apt-get install -y mtools
 
 
 # Copy configs
-COPY ../bin/minirc.kubos /etc/minicom/minirc.kubos
-COPY ../bin/kubos-usb.rules /etc/udev/rules.d/kubos-usb.rules
+COPY bin/minirc.kubos /etc/minicom/minirc.kubos
+COPY bin/kubos-usb.rules /etc/udev/rules.d/kubos-usb.rules
 
 # Create user accounts
 RUN useradd --create-home --shell /bin/bash kubos
@@ -58,7 +58,7 @@ RUN rustup target install armv5te-unknown-linux-gnueabi
 RUN rustup component add clippy
 RUN rustup component add rustfmt
 RUN /home/kubos/.cargo/bin/cargo install --git https://github.com/kubos/cargo-kubos
-COPY ../bin/cargo_config /home/kubos/.cargo/config
+COPY bin/cargo_config /home/kubos/.cargo/config
 
 
 RUN /home/kubos/.cargo/bin/cargo install --bin kubos-file-client --path /home/kubos/.kubos/kubos/clients/kubos-file-client/

@@ -13,11 +13,15 @@ There are three containers at play here to keep things organized:
 
 ## Setup
 ### Building the images
-to build the container run `docker build -t <name> .` while inside the folder for the container you want to build. Images may be set up to depend on each other by name so using the name of the directory as the image name is recommended.
 
-Alternatively, just use the `build-sdk.sh` script to build the containers as necessary for the SDK.
-The process for building the CI image is very similar.
+**TL;DR** to build any of the docker containers, use the command `docker build -t <image_name> -f <image_folder>/Dockerfile . ` while inside this `docker` folder. if you are just looking to build the docker container for the SDK, theres also a `build-sdk.sh` script.
 
+This slightly different command from the usual `docker build -t <name> .` is needed because the various containers need to copy some fonfiguration files from the `bin` folder throughout the process, so this folder also needs to be part of dockers build context.
+
+The build context is the directory passed to `docker build`, which is where it looks for the `Dockerfile` by default. Because this `bin` folder and the `Dockerfile` are in separate directories, the build context should be set to the `docker` folder and the Dockerfile needs to be manually specified because it differs from the default.
+
+#### Image names
+Most of the images rely on the `kubos-base` image, so it is recommended to keep the image names the same as the directory of their `Dockerfile` so images like `kubos-sdk` that depend on this base image are still able to build correctly.
 ### Configuring the container
 
 Because the docker compose file is designed to be run from the directory you want to mount (similar to the Vagrantfile), it should be relocated there.
@@ -35,4 +39,6 @@ To add additional directory mounts, such as for mounting something to `/home/kub
 
 ## Transferring data from the VM
 Vagrant offers a plugin that can be used to exfiltrate the data you want to transfer to the docker environment. This can be set up using `vagrant plugin install vagrant-scp` ([source](https://stackoverflow.com/questions/16704059/easiest-way-to-copy-a-single-file-from-host-to-vagrant-guest#28359455))
+
+
 
