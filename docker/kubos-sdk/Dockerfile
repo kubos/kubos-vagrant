@@ -1,5 +1,28 @@
 FROM kubos-base
 
+# Install more priviliged dependencies that only seem to be needed in the SDK environment
+
+RUN apt-get install -y software-properties-common
+
+# Install kernel additions for better USB device recognition
+RUN apt-get install -y linux-image-extra-virtual
+
+RUN apt-get install -y libffi-dev libhidapi-hidraw0 gdb
+ninja-build python-dev libffi-dev 
+
+RUN apt-get install -y sshpass
+
+
+# Documentation tools
+RUN apt-get install -y texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended latexmk texlive-fonts-extra
+
+# KubOS Linux setup
+# echo "Installing KubOS Linux Toolchains"
+
+RUN apt-get install -y minicom
+
+# Utilities for building KubOS Linux
+RUN apt-get install -y mtools
 
 # Create user accounts
 RUN useradd --create-home --shell /bin/bash kubos
