@@ -7,8 +7,7 @@ RUN apt-get install -y software-properties-common
 # Install kernel additions for better USB device recognition
 RUN apt-get install -y linux-image-extra-virtual
 
-RUN apt-get install -y libffi-dev libhidapi-hidraw0 gdb
-ninja-build python-dev libffi-dev 
+RUN apt-get install -y libffi-dev libhidapi-hidraw0 gdb ninja-build python-dev libffi-dev 
 
 RUN apt-get install -y sshpass
 
