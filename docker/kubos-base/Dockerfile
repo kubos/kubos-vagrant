@@ -44,7 +44,7 @@ COPY cargo_config /root/.cargo/config
 
 # Install NOS3 dependencies
 RUN apt-get --no-install-recommends install -y software-properties-common
-# This was originally a cz.archive domain not us. I dont know if this was intentional. 
+# This was originally a cz.archive domain not us.
 RUN add-apt-repository 'deb http://us.archive.ubuntu.com/ubuntu xenial main universe'
 RUN apt-get install -y libboost-system1.58.0 libboost-program-options1.58.0 libxerces-c3.1
 RUN wget https://github.com/nasa/nos3/raw/v1_04_00/support/packages/ubuntu/itc-common-cxx11-Release_1.9.1_amd64.deb && \
