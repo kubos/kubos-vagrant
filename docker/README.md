@@ -13,9 +13,10 @@ There are three containers at play here to keep things organized:
 
 ## Setup
 ### Building the images
-to build the container run `docker build -t <name> .` while inside the folder for the container you want to build. You need to build kubos-dev first before any containers that rely on it.
+to build the container run `docker build -t <name> .` while inside the folder for the container you want to build. Images may be set up to depend on each other by name so using the name of the directory as the image name is recommended.
 
-Alternatively, just use the `build.sh` script to build all the containers
+Alternatively, just use the `build-sdk.sh` script to build the containers as necessary for the SDK.
+The process for building the CI image is very similar.
 
 ### Configuring the container
 
