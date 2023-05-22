@@ -4,12 +4,21 @@
 #
 #    pip-compile requirements.in
 #
-certifi==2019.9.11        # via requests
-chardet==3.0.4            # via requests
-gitdb2==2.0.6             # via gitpython
+certifi==2019.9.11
+    # via requests
+charset-normalizer==3.1.0
+    # via requests
+gitdb2==2.0.6
+    # via gitpython
 gitpython==2.1.7
-idna==2.6                 # via requests
-python_vagrant==0.5.15
-requests==2.18.4
-smmap2==2.0.5             # via gitdb2
-urllib3==1.22             # via requests
+    # via -r requirements.in
+idna==2.6
+    # via requests
+python-vagrant==0.5.15
+    # via -r requirements.in
+requests==2.31.0
+    # via -r requirements.in
+smmap2==2.0.5
+    # via gitdb2
+urllib3==1.22
+    # via requests
