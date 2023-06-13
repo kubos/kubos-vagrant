@@ -41,4 +41,8 @@ To add additional directory mounts, such as for mounting something to `/home/kub
 Vagrant offers a plugin that can be used to exfiltrate the data you want to transfer to the docker environment. This can be set up using `vagrant plugin install vagrant-scp` ([source](https://stackoverflow.com/questions/16704059/easiest-way-to-copy-a-single-file-from-host-to-vagrant-guest#28359455))
 
 
+## Moving the generated image to an external drive
+For space-constrained host PC's, its possible to move the docker images to an external drive:
+- Macos: https://stackoverflow.com/questions/38205735/store-docker-image-files-on-external-drive-in-macos#40114330
+- linux:
 
