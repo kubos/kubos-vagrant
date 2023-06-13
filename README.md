@@ -1,3 +1,16 @@
+##  Kubos-Dev
+
+This repo aims to contain various dev and build environment setup instructions.
+
+It includes:
+- the kubos vagrant environment mentioned in the kubos docs (`kubos-dev`)
+- docker images for CI builds (`docker/kubos-build`) that have been relocated from the main repo
+- a docker image that aims to be an equivalent to the vagrant image to promote reuse and space savings by deduplicating many things with the CI build image (`docker/kobos-sdk`) 
+
+
+------
+
+
 For usage instructions checkout the official [Kubos docs](https://docs.kubos.com/latest/sdk-docs/index.html)
 
 ## Testing Vagrant Changes:
