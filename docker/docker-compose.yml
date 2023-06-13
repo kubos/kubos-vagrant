@@ -1,0 +1,12 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  kubos-sdk:
+    image: kubos-sdk
+    volumes:
+      - .:/vagrant
+    entrypoint: "bash"
+    stdin_open: true
+    tty: true
+    # if you have a device you want to make available in the VM, uncomment this
+    # devices:
+    # - "/dev/ttyUSB0:/dev/FTDI"
